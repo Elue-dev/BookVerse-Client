@@ -1,0 +1,176 @@
+@import "../../styles/mixins";
+@import "../../styles/colors";
+
+main {
+  background-color: #3333;
+  height: 100vh;
+  background: linear-gradient(45deg, $mainColor 50%, rgb(255, 255, 255) 50%);
+  position: relative;
+  z-index: 1;
+  &::after {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: -1;
+  }
+  .logo {
+    padding-bottom: 1rem;
+    a {
+      @include flexBox(center, center);
+      gap: 0.4rem;
+      color: #fff;
+      text-decoration: none;
+      :first-child {
+        font-size: 2.4rem;
+        color: $mainColor;
+      }
+      :last-child {
+        font-weight: 700;
+        font-size: 1.7rem;
+      }
+    }
+  }
+  .auth {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #333;
+    width: 400px;
+    .auth__contents {
+      background: #fff;
+      box-shadow: $box-shadow;
+      padding: 0.9rem 0.8rem;
+      border-radius: 0.3rem;
+      .heading {
+        @include flexBox(space-between, center);
+        cursor: pointer;
+        padding: 0 0.5rem 1rem 0.5rem;
+        font-weight: 700;
+        text-align: center;
+        & > div {
+          transition: background 0.1s ease-in-out;
+          @include flexBox(center, center);
+          gap: 0.25rem;
+        }
+      }
+      .active {
+        background: #717171;
+        color: #fff;
+        padding: 0.4rem;
+        width: 50%;
+        border-radius: 0.2rem;
+      }
+      form {
+        max-width: 450px;
+        padding: 0.3rem 0.5rem;
+        label {
+          span {
+            display: block;
+            margin-bottom: 0.3rem;
+            font-weight: 500;
+          }
+          input {
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 0.5px solid rgb(231, 231, 231);
+            border-radius: 0.3rem;
+            width: 100%;
+            outline: 0;
+            &::placeholder {
+              color: rgb(152, 149, 149);
+            }
+          }
+        }
+        button {
+          @include button();
+          background: $mainColor;
+          color: #fff;
+          padding: 0.5rem 1rem;
+          width: 100%;
+        }
+        .name {
+          display: flex;
+          grid-template-columns: 1fr 1fr;
+          gap: 0.5rem;
+          input {
+            padding: 0.5rem;
+          }
+        }
+        .avatar {
+          @include flexBox(left, center);
+          gap: 0.4rem;
+          padding: 1rem 0;
+          cursor: pointer;
+          color: rgb(108, 160, 159);
+        }
+        .password__visibility__toggler {
+          @include flexBox(center, center, row);
+          border: 1px solid rgb(176, 173, 173);
+          border-radius: 0.3rem;
+          gap: 0.4rem;
+          padding: 0 0.8rem;
+          :first-child {
+            font-size: 1.4rem;
+            display: block;
+            color: rgb(152, 149, 149);
+          }
+          input {
+            border: 0;
+            margin-bottom: 0;
+            display: block;
+          }
+          span {
+            cursor: pointer;
+          }
+        }
+        .auth__icon {
+          border: 1px solid rgb(152, 149, 149);
+          @include flexBox(flex-start, center, row);
+          border-radius: 0.3rem;
+          padding: 0 0.8rem;
+          :first-child {
+            font-size: 1.4rem;
+            color: rgb(152, 149, 149);
+          }
+          input {
+            border: 0;
+            margin-bottom: 0;
+            display: block;
+          }
+          span {
+            cursor: pointer;
+          }
+        }
+        .avatar {
+          img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+          .avatar__upload {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+// @include mQ(500px) {
+//   main .auth {
+//     width: 349px;
+//   }
+//   main .auth .auth__contents form label input {
+//     width: 100%;
+//   }
+//   main .auth .auth__contents form button,
+//   main .auth .auth__contents .google__btn {
+//     width: 100%;
+//   }
+// }

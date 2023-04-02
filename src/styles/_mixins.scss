@@ -1,0 +1,57 @@
+@mixin container() {
+  max-width: 1300px;
+  width: 80%;
+  margin: auto;
+  @include mQ(600px) {
+    width: 90%;
+  }
+}
+
+@mixin flexBox($justify, $align, $direction: "row") {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+  flex-direction: $direction;
+}
+
+@mixin grid($tempCol, $gap) {
+  display: grid;
+  grid-template-columns: $tempCol;
+  gap: $gap;
+}
+
+@mixin button {
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 4px 6px;
+  margin: 0 5px 0 0;
+  border: 1px solid transparent;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: "Lato", sans-serif;
+  @include mQ(500px) {
+    font-size: 0.9rem;
+  }
+}
+
+@mixin mQ($respond) {
+  @media (max-width: $respond) {
+    @content;
+  }
+}
+
+$mainColor: #746ab0;
+$box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+@include mQ(600px) {
+  .section {
+    background: rgba(0, 0, 0, 0.7);
+    height: 100vh;
+    position: auto;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+  }
+}

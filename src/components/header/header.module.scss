@@ -1,0 +1,84 @@
+@import "../../styles/mixins";
+
+header {
+  @include container();
+  width: 80%;
+  @include flexBox(space-between, center);
+  gap: 0.5rem;
+  padding: 1rem 0 0.4rem 0;
+  .logo {
+    a {
+      @include flexBox(center, center);
+      gap: 0.3rem;
+      color: #333;
+      text-decoration: none;
+      :first-child {
+        font-size: 1.9rem;
+        color: $mainColor;
+      }
+      :last-child {
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
+    }
+  }
+  .search {
+    border: 1px solid rgb(151, 151, 151);
+    padding: 0.6rem 0.3rem;
+    border-radius: 0.4rem;
+    position: relative;
+    @include mQ(600px) {
+      display: none;
+    }
+    input {
+      border: 0;
+      outline: 0;
+      width: 300px;
+      color: #666;
+    }
+    .search__results {
+      position: absolute;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      padding: 0.4rem;
+      width: 100%;
+      background: #fff;
+      margin-top: 0.8rem;
+      z-index: 10000;
+      & > p {
+        color: #444;
+      }
+      .search__details {
+        @include flexBox(left, center);
+        gap: 0.5rem;
+        border-radius: 0.4rem;
+        background-color: transparent;
+        // border: 0.5px solid $mainColor;
+        color: #444;
+        padding: 0.3rem;
+        z-index: 10000000;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 0.4rem;
+        cursor: pointer;
+      }
+      img {
+        width: 50px;
+        height: 50px;
+      }
+      a {
+        text-decoration: none;
+        color: initial;
+      }
+    }
+  }
+  img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .user {
+    font-size: 2rem;
+    cursor: pointer;
+    color: rgb(59, 57, 57);
+  }
+}

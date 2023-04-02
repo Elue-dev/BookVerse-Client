@@ -1,0 +1,21 @@
+@import "../../styles/mixins";
+@import "../../styles/colors";
+
+footer {
+  @include container();
+  height: 20px;
+  margin-top: 3rem;
+  margin-bottom: 0.5rem;
+  padding: 1.7rem;
+  @include flexBox(space-between, center);
+  background: transparent;
+  border: 1px solid rgb(118, 118, 118);
+  border-radius: 0.2rem;
+  :first-child {
+    @include flexBox(left, center);
+    gap: 0.3rem;
+    :first-child {
+      font-size: 2rem;
+    }
+  }
+}

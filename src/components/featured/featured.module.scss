@@ -1,0 +1,63 @@
+@import "../../styles/mixins";
+@import "../../styles/colors";
+
+.featured__books {
+  @include grid(repeat(3, 1fr), 3rem);
+  @include container();
+  width: 80%;
+  padding-top: 2rem;
+  .books__card {
+    // @include flexBox(space-between, center, column);
+    border-radius: 0.3rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+    overflow: hidden;
+    img {
+      border: 0.5px solid #c8c8c8;
+      height: 250px;
+      object-fit: cover;
+      overflow: hidden;
+      width: 100%;
+      border-left: 2px solid gray;
+      border-bottom: 0.5px solid $mainColor;
+    }
+    .book__details {
+      padding: 1rem;
+      @include flexBox(left, left, column);
+      border-bottom: 4px solid $mainColor;
+      gap: 0.3rem;
+      :nth-child(2) {
+        font-weight: 500;
+        @include flexBox(left, center);
+        gap: 0.5rem;
+
+        :first-child {
+          color: gray;
+        }
+      }
+      :nth-child(3) {
+        font-weight: 300;
+        color: rgb(108, 108, 108);
+      }
+      .bottom {
+        @include flexBox(space-between, center);
+        :nth-child(2) {
+          font-weight: 500;
+          font-size: 1.3rem;
+        }
+        button {
+          outline: 0;
+          border: 0;
+          margin-top: 1rem;
+          background: $mainColor;
+          color: #fff;
+          font-size: 1rem;
+          font-weight: 700;
+          border-radius: 0.5rem;
+          padding: 0.4rem 1.4rem;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

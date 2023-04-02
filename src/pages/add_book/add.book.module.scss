@@ -1,0 +1,94 @@
+@import "../../styles/mixins";
+@import "../../styles/colors";
+
+.add__book {
+  @include container();
+  padding-top: 1rem;
+  display: flex;
+  .left__section {
+    flex: 3;
+    .top {
+      @include flexBox(left, center);
+      gap: 0.4rem;
+      width: 90%;
+    }
+    & > div {
+      input {
+        width: 90%;
+        outline: 0;
+        padding: 0.5rem;
+        border-radius: 0.3rem;
+        border: 1px solid lightgrey;
+        margin-bottom: 1rem;
+      }
+    }
+    .editor__cont {
+      width: 90%;
+      overflow: scroll;
+      border: 0.5px solid lightgrey;
+      height: 317px;
+      .editor {
+        height: 100%;
+        border: none;
+      }
+    }
+  }
+  .right__section {
+    flex: 1;
+    .container {
+      border: 1px solid lightgrey;
+      padding: 0.7rem;
+      cursor: pointer;
+      .image__icon {
+        height: 100px;
+        width: 90%;
+        color: rgb(180, 180, 180);
+      }
+      .image__upload {
+        display: none;
+      }
+      p {
+        color: $mainColor;
+      }
+      .preview {
+        height: 100px;
+        width: 90%;
+      }
+    }
+    .genres {
+      border: 1px solid lightgrey;
+      padding: 0.6rem 0.7rem;
+      margin-top: 1rem;
+      h4 {
+        text-align: center;
+        color: #222;
+        padding: 0.5rem;
+      }
+      & > div {
+        line-height: 26px;
+      }
+      .genre {
+        @include grid(repeat(2, 1fr), 0.4rem);
+        input {
+          cursor: pointer;
+        }
+      }
+      .add__btn {
+        text-align: center;
+        button {
+          outline: 0;
+          border: 0;
+          margin-top: 1rem;
+          background: transparent;
+          color: $mainColor;
+          border: 2px solid $mainColor;
+          font-size: 1rem;
+          font-weight: 700;
+          border-radius: 0.5rem;
+          padding: 0.4rem 1.4rem;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
