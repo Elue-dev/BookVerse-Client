@@ -77,9 +77,18 @@ header {
     border-radius: 50%;
     object-fit: cover;
   }
-  .user {
-    font-size: 2rem;
-    cursor: pointer;
-    color: rgb(59, 57, 57);
+  .user__section {
+    position: relative;
+    .user {
+      font-size: 2rem;
+      cursor: pointer;
+      color: rgb(59, 57, 57);
+    }
+    .dropdown {
+      position: absolute;
+      cursor: pointer;
+      left: 2rem;
+      top: 1.9rem;
+    }
   }
 }

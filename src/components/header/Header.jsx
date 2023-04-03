@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { BiUserCircle, BiBookReader } from "react-icons/bi";
+import { GoTriangleDown } from "react-icons/go";
 import styles from "./header.module.scss";
 import { useSelector } from "react-redux";
 import { getCurrentUser } from "../../redux/slices/auth.slice";
@@ -81,15 +82,20 @@ export default function Header() {
         )}
       </div>
 
-      {currentUser ? (
-        <Link to="/dashboard">
-          <img src={currentUser.img} alt={currentUser.username} />
-        </Link>
-      ) : (
-        <Link to="/auth">
-          <BiUserCircle className={styles.user} />
-        </Link>
-      )}
+      <div className={styles["user__section"]}>
+        {currentUser ? (
+          <Link to="/dashboard">
+            <img src={currentUser.img} alt={currentUser.username} />
+          </Link>
+        ) : (
+          <Link to="/auth">
+            <BiUserCircle className={styles.user} />
+          </Link>
+        )}
+        <span className={styles.dropdown}>
+          <GoTriangleDown />
+        </span>
+      </div>
     </header>
   );
 }

@@ -18,6 +18,8 @@ import { errorToast, successToast } from "../../../utils/alerts";
 import { PulseLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 import UserBooks from "./user_books/UserBooks";
+import { CiLogout } from "react-icons/ci";
+import axios from "axios";
 
 export default function Dashboard() {
   const currentUser = useSelector(getCurrentUser);
@@ -110,10 +112,28 @@ export default function Dashboard() {
     }
   };
 
+  const logoutUser = async () => {
+    setLoading(true);
+
+    try {
+      const response = await axios.post(`${SERVER_URL}/auth/logout`, {});
+      setLoading(false);
+      dispatch(REMOVE_ACTIVE_USER());
+      response && navigate("/");
+    } catch (error) {
+      setLoading(false);
+      errorToast(error.response.data.message);
+    }
+  };
+
   return (
     <section className={styles.dashboard}>
       <div className={styles["left__section"]}>
         <div className={styles.card}>
+          <p className={styles.logout} onClick={logoutUser}>
+            <CiLogout />
+            <span>Log out</span>
+          </p>
           <div>
             <img
               src={imagePreview ? imagePreview : currentUser.img}

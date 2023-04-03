@@ -2,4 +2,21 @@
 @import "../../../styles/colors";
 
 .user__books {
+  .book__details {
+    @include flexBox(left, cennter);
+    gap: 1rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    img {
+      width: 90px;
+      height: 100px;
+    }
+    p {
+      margin-top: 0.2rem;
+      color: #666;
+      b {
+        color: $mainColor;
+      }
+    }
+  }
 }

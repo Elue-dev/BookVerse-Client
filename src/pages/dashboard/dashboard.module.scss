@@ -3,11 +3,11 @@
 
 .dashboard {
   @include container();
-  padding-top: 2rem;
+  margin-top: 2rem;
   display: flex;
-  gap: 1rem;
+  gap: 2.5rem;
   .left__section {
-    flex: 2;
+    flex: 2.5;
     button {
       outline: 0;
       border: 0;
@@ -24,6 +24,19 @@
     .card {
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
       padding: 1.3rem;
+      position: relative;
+      .logout {
+        position: absolute;
+        top: 0;
+        right: 0;
+        @include flexBox(left, center);
+        gap: 0.4rem;
+        @extend button;
+        border: 2px solid $mainColor;
+        color: #fff;
+        background: rgb(73, 73, 73);
+        margin-top: 0;
+      }
       & > div {
         @include flexBox(left, center);
         gap: 1rem;
@@ -51,6 +64,7 @@
             border-radius: 0.3rem;
             width: 100%;
             outline: 0;
+            color: #444;
             &::placeholder {
               color: rgb(152, 149, 149);
             }
@@ -77,6 +91,6 @@
     }
   }
   .right__section {
-    flex: 2;
+    flex: 1.5;
   }
 }
