@@ -44,6 +44,7 @@ header {
       background: #fff;
       margin-top: 0.8rem;
       z-index: 10000;
+      overflow: scroll;
       & > p {
         color: #444;
       }

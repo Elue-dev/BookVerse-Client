@@ -1,0 +1,82 @@
+@import "../../styles/mixins";
+@import "../../styles/colors";
+
+.dashboard {
+  @include container();
+  padding-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  .left__section {
+    flex: 2;
+    button {
+      outline: 0;
+      border: 0;
+      margin-top: 1rem;
+      border: 2px solid $mainColor;
+      color: $mainColor;
+      background: transparent;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 0.5rem;
+      padding: 0.4rem 1.4rem;
+      cursor: pointer;
+    }
+    .card {
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      padding: 1.3rem;
+      & > div {
+        @include flexBox(left, center);
+        gap: 1rem;
+        img {
+          height: 100px;
+          width: 100px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+        .image__upload {
+          display: none;
+        }
+      }
+      form {
+        padding-top: 1.5rem;
+        label {
+          span {
+            display: block;
+            margin-bottom: 0.3rem;
+          }
+          input {
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 0.5px solid rgb(195, 195, 195);
+            border-radius: 0.3rem;
+            width: 100%;
+            outline: 0;
+            &::placeholder {
+              color: rgb(152, 149, 149);
+            }
+          }
+        }
+        .password__reveal {
+          display: inline-block;
+          @include flexBox(left, center);
+          gap: 0.5rem;
+          cursor: pointer;
+          padding-bottom: 1rem;
+        }
+        .password__sec {
+          border: 0.5px solid rgb(232, 232, 232);
+          border-radius: 0.3rem;
+          background: rgb(250, 250, 250);
+          padding: 1rem;
+        }
+        .submit {
+          background: $mainColor;
+          color: #fff;
+        }
+      }
+    }
+  }
+  .right__section {
+    flex: 2;
+  }
+}

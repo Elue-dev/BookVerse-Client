@@ -13,12 +13,10 @@ import { httpRequest } from "../../../services/httpRequest";
 
 export default function AddBook() {
   const state = useLocation().state;
-
-  console.log({ state });
-  const [description, setDescription] = useState(state?.description || "");
-  const [title, setTitle] = useState(state?.title || "");
-  const [price, setPrice] = useState(state?.price || "");
-  const [genre, setSelectedGenre] = useState(state?.category || "");
+  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState("");
+  const [genre, setSelectedGenre] = useState("");
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const imageRef = useRef();
@@ -30,16 +28,20 @@ export default function AddBook() {
   const action = queryParams.get("action");
 
   useEffect(() => {
-    if (action === "new") {
-      setTitle("");
-      setDescription("");
-      setPrice("");
-      setSelectedGenre("");
-    } else if (action === "edit") {
-      setTitle(state?.title);
-      setDescription(state?.description);
-      setPrice(state?.price);
-      setSelectedGenre(state?.category);
+    switch (action) {
+      case "new":
+        setTitle("");
+        setDescription("");
+        setPrice("");
+        setSelectedGenre("");
+        break;
+      case "edit":
+        setTitle(state?.title);
+        setDescription(state?.description);
+        setPrice(state?.price);
+        setSelectedGenre(state?.category);
+      default:
+        "";
     }
   }, [action]);
 
@@ -79,6 +81,7 @@ export default function AddBook() {
         queryClient.invalidateQueries(["books"]);
       },
       onError: (err) => {
+        setLoading(false);
         errorToast("Something went wrong");
         console.log("ERROR", err);
       },
@@ -86,15 +89,18 @@ export default function AddBook() {
   );
 
   const updateMutation = useMutation(
-    (newBook) => {
-      return httpRequest.patch(`/books/${state.id}`, newBook);
+    (updatedbook) => {
+      return httpRequest.patch(`/books/${state.id}`, updatedbook);
     },
     {
       onSuccess: (data) => {
+        console.log({ data });
         successToast(data.data.message);
         queryClient.invalidateQueries(["books"]);
       },
       onError: (err) => {
+        setLoading(false);
+        errorToast(err.response.data.message);
         console.log("ERROR", err);
       },
     }
@@ -112,7 +118,6 @@ export default function AddBook() {
     );
     const imageData = await response.json();
     imageUrl = imageData?.url?.toString();
-    console.log(imageUrl);
     setImage(null);
     setImagePreview(null);
   };
@@ -120,43 +125,31 @@ export default function AddBook() {
   const addBook = async () => {
     setLoading(true);
 
-    try {
-      await uploadBookImage();
-      await mutation.mutateAsync({
-        title,
-        description: parseText(description),
-        price,
-        category: genre,
-        image: imageUrl,
-      });
-      setLoading(false);
-      navigate("/");
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-      errorToast(error);
-    }
+    await uploadBookImage();
+    await mutation.mutateAsync({
+      title,
+      description: parseText(description),
+      price,
+      category: genre,
+      image: imageUrl,
+    });
+    setLoading(false);
+    navigate("/");
   };
 
   const updateBook = async () => {
     setLoading(true);
 
-    try {
-      image && (await uploadBookImage());
-      await updateMutation.mutateAsync({
-        title,
-        description: parseText(description),
-        price,
-        category: genre,
-        image: imageUrl || state.bookimg,
-      });
-      setLoading(false);
-      navigate("/");
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-      errorToast(error);
-    }
+    image && (await uploadBookImage());
+    await updateMutation.mutateAsync({
+      title,
+      description: parseText(description),
+      price,
+      category: genre,
+      image: imageUrl || state.bookimg,
+    });
+    setLoading(false);
+    navigate("/");
   };
 
   return (

@@ -47,7 +47,7 @@ export default function BookDetail() {
         queryClient.invalidateQueries(["books"]);
       },
       onError: (err) => {
-        errorToast("Something went wrong");
+        errorToast(err.response.data.message);
         console.log("ERROR", err);
       },
     }
@@ -82,7 +82,11 @@ export default function BookDetail() {
           />
           <div className={styles.user}>
             <b>{book.username}</b>
-            <p>Added {moment(book.date).fromNow()}</p>
+            {currentUser?.id === book.userid ? (
+              <p>Added by you {moment(book.date).fromNow()}</p>
+            ) : (
+              <p>Added {moment(book.date).fromNow()}</p>
+            )}
           </div>
 
           {currentUser?.id === book.userid && (
