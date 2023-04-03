@@ -3,9 +3,9 @@ import { BiUserCircle, BiBookReader } from "react-icons/bi";
 import styles from "./header.module.scss";
 import { useSelector } from "react-redux";
 import { getCurrentUser } from "../../redux/slices/auth.slice";
-import { httpRequest } from "../../../services/axios";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { httpRequest } from "../../../services/httpRequest";
 
 export default function Header() {
   const location = useLocation();

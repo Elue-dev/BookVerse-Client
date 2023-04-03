@@ -5,6 +5,9 @@
   @include container();
   padding-top: 1rem;
   display: flex;
+  img {
+    border-radius: 0.3rem;
+  }
   .left__section {
     flex: 3;
     .book__img {
@@ -27,19 +30,36 @@
           color: rgb(97, 97, 97);
         }
       }
+      .actions {
+        cursor: pointer;
+        margin-left: 2rem;
+        .edit {
+          color: rgb(118, 185, 159);
+          font-size: 1.8rem;
+        }
+        .delete {
+          color: rgba(255, 0, 123, 0.461);
+          font-size: 1.6rem;
+        }
+      }
     }
     .book__details {
       padding-top: 1.5rem;
       width: 90%;
-      :nth-child(2) {
+      :nth-child(2),
+      :nth-child(3) {
         b {
           color: $mainColor;
+          margin-bottom: 0.6rem;
         }
       }
       :last-child {
         color: #555;
         padding-top: 0.7rem;
       }
+    }
+    .comments__container {
+      width: 90%;
     }
   }
   .right__section {

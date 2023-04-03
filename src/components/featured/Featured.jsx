@@ -1,9 +1,9 @@
-import { httpRequest } from "../../../services/axios";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
 import styles from "./featured.module.scss";
 import { Link } from "react-router-dom";
-import { BsCalendarDate } from "react-icons/bs";
+import { BsFillCalendar2PlusFill } from "react-icons/bs";
+import { httpRequest } from "../../../services/httpRequest";
 
 export default function featured() {
   const {
@@ -29,7 +29,7 @@ export default function featured() {
           <div className={styles["book__details"]}>
             <h3>{book.title}</h3>
             <p>
-              <BsCalendarDate /> {moment(book.date).fromNow()}
+              <BsFillCalendar2PlusFill /> {moment(book.date).fromNow()}
             </p>
             <p>{book.description.substring(0, 90)}...</p>
             <div className={styles.bottom}>

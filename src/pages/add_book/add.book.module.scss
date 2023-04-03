@@ -35,6 +35,15 @@
   }
   .right__section {
     flex: 1;
+    img {
+      height: 100px;
+      width: 90%;
+      object-fit: cover;
+    }
+    p {
+      color: $mainColor;
+      cursor: pointer;
+    }
     .container {
       border: 1px solid lightgrey;
       padding: 0.7rem;
@@ -53,6 +62,7 @@
       .preview {
         height: 100px;
         width: 90%;
+        object-fit: cover;
       }
     }
     .genres {

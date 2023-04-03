@@ -1,0 +1,82 @@
+@import "../../styles/mixins";
+@import "../../styles/colors";
+
+.comments {
+  padding-top: 1.4rem;
+  .header {
+    @include flexBox(left, center);
+    gap: 0.3rem;
+    span {
+      @include flexBox(left, center);
+      gap: 0.3rem;
+      cursor: pointer;
+    }
+    .nouser {
+      text-align: center;
+      padding-top: 0.3rem;
+      color: $mainColor;
+      margin-left: auto;
+      cursor: pointer;
+      text-decoration: none;
+    }
+  }
+  .comments__section {
+    padding-top: 1rem;
+
+    & > div {
+      @include flexBox(left, center);
+      gap: 0.3rem;
+      img {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      input {
+        padding: 0.9rem;
+        outline: none;
+        border: 0.5px solid rgb(95, 95, 95);
+        border-radius: 0.3rem;
+        width: 650px;
+      }
+      button {
+        padding: 0.75rem;
+        background: $mainColor;
+        color: #fff;
+        border: 0;
+        font-weight: 600;
+        font-size: 1rem;
+        border-radius: 0.3rem;
+        cursor: pointer;
+      }
+    }
+  }
+  .book__comments {
+    padding-top: 1rem;
+    max-width: 1200px;
+    width: 80%;
+    margin: auto;
+    .comment__details {
+      @include flexBox(left, center);
+      gap: 0.6rem;
+      padding: 1rem 0;
+      border-bottom: 0.5px solid rgb(231, 231, 231);
+      img {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      .username {
+        font-weight: 200;
+        color: #444;
+      }
+      .date {
+        margin-left: auto;
+        color: #444;
+        @include flexBox(left, center);
+        gap: 0.2rem;
+      }
+    }
+  }
+}

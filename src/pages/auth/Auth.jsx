@@ -8,7 +8,6 @@ import { TbUserPlus } from "react-icons/tb";
 import { FcAddImage } from "react-icons/fc";
 import { MdAlternateEmail } from "react-icons/md";
 import styles from "./auth.module.scss";
-import axios from "axios";
 import {
   CLOUD_NAME,
   SERVER_URL,
@@ -18,6 +17,7 @@ import { errorToast, successToast } from "../../../utils/alerts";
 import { BiBookReader } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { SET_ACTIVE_USER } from "../../redux/slices/auth.slice";
+import { httpRequest } from "../../../services/httpRequest";
 
 const initialState = {
   username: "",
@@ -40,6 +40,12 @@ export default function Auth() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   let imageUrl;
+
+  useEffect(() => {
+    setValues(initialState);
+    setAvatar(null);
+    setAvatarPreview(null);
+  }, [authState]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -67,12 +73,9 @@ export default function Auth() {
     };
 
     try {
-      const response = await axios.post(
+      const response = await httpRequest.post(
         `${SERVER_URL}/auth/login`,
-        credentials,
-        {
-          withCredentials: true,
-        }
+        credentials
       );
       setLoading(false);
       dispatch(SET_ACTIVE_USER(response.data));
@@ -102,12 +105,9 @@ export default function Auth() {
         image: imageUrl,
       };
 
-      const response = await axios.post(
+      const response = await httpRequest.post(
         `${SERVER_URL}/auth/register`,
-        credentials,
-        {
-          withCredentials: true,
-        }
+        credentials
       );
       if (response) {
         setLoading(false);
@@ -265,7 +265,7 @@ export default function Auth() {
                 ) : (
                   <>
                     <FcAddImage />
-                    <p>Add an avatar</p>
+                    <p>Add a profile picture</p>
                     <input
                       type="file"
                       onChange={(e) => handleImageChange(e)}

@@ -51,7 +51,7 @@ export default function Navlinks() {
           <Link to="/featured">Featured</Link>
         </li>
         <li>
-          <Link to="/add-book">Add Book</Link>
+          <Link to="/add-book?action=new">Add Book</Link>
         </li>
         <li className={styles["search__icon"]}>
           <Link to="/account">

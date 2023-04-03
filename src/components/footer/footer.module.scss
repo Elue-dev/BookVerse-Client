@@ -1,7 +1,7 @@
 @import "../../styles/mixins";
 @import "../../styles/colors";
 
-footer {
+.footer {
   @include container();
   height: 20px;
   margin-top: 3rem;
@@ -11,7 +11,9 @@ footer {
   background: transparent;
   border: 1px solid rgb(118, 118, 118);
   border-radius: 0.2rem;
-  :first-child {
+  a {
+    color: #000;
+    text-decoration: none;
     @include flexBox(left, center);
     gap: 0.3rem;
     :first-child {
