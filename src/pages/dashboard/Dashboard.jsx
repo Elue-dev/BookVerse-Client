@@ -17,6 +17,7 @@ import {
 import { errorToast, successToast } from "../../../utils/alerts";
 import { PulseLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
+import UserBooks from "./user_books/UserBooks";
 
 export default function Dashboard() {
   const currentUser = useSelector(getCurrentUser);
@@ -67,6 +68,9 @@ export default function Dashboard() {
 
   const updateUserCredentials = async (e) => {
     e.preventDefault();
+
+    if (newPassword !== confirmPassword)
+      return errorToast("New password credentials do not match");
 
     setLoading(true);
     try {
@@ -201,7 +205,9 @@ export default function Dashboard() {
           </form>
         </div>
       </div>
-      <div className={styles["right__section"]}>right</div>
+      <div className={styles["right__section"]}>
+        <UserBooks currentUser={currentUser} />
+      </div>
     </section>
   );
 }
