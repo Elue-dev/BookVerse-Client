@@ -14,7 +14,7 @@ export default function Navlinks() {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/featured">Featured</Link>
+          <Link to="/books">Books</Link>
         </li>
         <li>
           <Link to="/add-book?action=new">Add Book</Link>

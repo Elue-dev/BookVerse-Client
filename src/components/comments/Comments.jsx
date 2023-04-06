@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { httpRequest } from "../../../services/httpRequest";
-import moment from "moment";
 import { BsDot } from "react-icons/bs";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { MdOutlineArrowDropUp } from "react-icons/md";
@@ -11,6 +10,7 @@ import styles from "./comments.module.scss";
 import { getCurrentUser } from "../../redux/slices/auth.slice";
 import { errorToast, successToast } from "../../../utils/alerts";
 import { Link } from "react-router-dom";
+import { format, render, cancel, register } from "timeago.js";
 
 export default function Comments({ bookId }) {
   const currentUser = useSelector(getCurrentUser);
@@ -46,9 +46,6 @@ export default function Comments({ bookId }) {
   );
 
   const addComment = () => {
-    if (!text) {
-      return errorToast("Please add your comment");
-    }
     mutation.mutateAsync({
       comment: text,
       bookid: bookId,
@@ -95,7 +92,6 @@ export default function Comments({ bookId }) {
               </div>
             )}
           </div>
-
           <div className={styles["book__comments"]}>
             {comments.map((comment) => (
               <div className={styles["comment__details"]} key={comment.id}>
@@ -107,7 +103,9 @@ export default function Comments({ bookId }) {
                   <p className={styles.username}>{comment.comment}</p>
                 </div>
                 <div className={styles.date}>
-                  <CiClock2 /> {moment(comment.date).fromNow()}
+                  <CiClock2 />
+                  {/* {format(new Date(comment.date))} */}
+                  {new Date(comment.date).toDateString()}
                 </div>
               </div>
             ))}

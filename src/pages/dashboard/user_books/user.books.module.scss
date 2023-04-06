@@ -2,6 +2,10 @@
 @import "../../../styles/colors";
 
 .user__books {
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
   .book__details {
     @include flexBox(left, cennter);
     gap: 1rem;

@@ -94,7 +94,6 @@ export default function AddBook() {
     },
     {
       onSuccess: (data) => {
-        console.log({ data });
         successToast(data.data.message);
         queryClient.invalidateQueries(["books"]);
       },
@@ -123,6 +122,12 @@ export default function AddBook() {
   };
 
   const addBook = async () => {
+    if (!title || !description || !genre || !image || !price) {
+      return errorToast(
+        "All fields are required (Title, Price, Description, Image & Genre )"
+      );
+    }
+
     setLoading(true);
 
     await uploadBookImage();
@@ -138,6 +143,12 @@ export default function AddBook() {
   };
 
   const updateBook = async () => {
+    if (!title || !description || !genre || !price) {
+      return errorToast(
+        "All fields are required (Title, Price, Description & Genre )"
+      );
+    }
+
     setLoading(true);
 
     image && (await uploadBookImage());
@@ -176,6 +187,7 @@ export default function AddBook() {
             className={styles.editor}
             value={description}
             onChange={setDescription}
+            placeholder="Enter book description here..."
           />
         </div>
       </div>

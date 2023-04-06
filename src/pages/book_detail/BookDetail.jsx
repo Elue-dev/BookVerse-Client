@@ -1,13 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import styles from "./book.detail.module.scss";
-import moment from "moment";
 import { httpRequest } from "../../../services/httpRequest";
 import Comments from "../../components/comments/Comments";
 import { MdDeleteForever, MdOutlineEditNote } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { getCurrentUser } from "../../redux/slices/auth.slice";
 import { errorToast, successToast } from "../../../utils/alerts";
+import Notiflix from "notiflix";
+import styles from "./book.detail.module.scss";
 
 export default function BookDetail() {
   const { slug } = useParams();
@@ -28,7 +28,7 @@ export default function BookDetail() {
     isLoading: loading,
     error: err,
     data: books,
-  } = useQuery(["books-cat"], () =>
+  } = useQuery([`books-${book?.category}`], () =>
     httpRequest.get(`/books`).then((res) => {
       return res.data.books;
     })
@@ -53,6 +53,26 @@ export default function BookDetail() {
     }
   );
 
+  const confirmDelete = () => {
+    Notiflix.Confirm.show(
+      "Delete Book",
+      "Are you sure you want to delete this book?",
+      "DELETE",
+      "CLOSE",
+      function okCb() {
+        deleteBook();
+      },
+      function cancelCb() {},
+      {
+        width: "320px",
+        borderRadius: "5px",
+        titleColor: "crimson",
+        okButtonBackground: "crimson",
+        cssAnimationStyle: "zoom",
+      }
+    );
+  };
+
   const deleteBook = async () => {
     mutation.mutate();
   };
@@ -65,7 +85,6 @@ export default function BookDetail() {
   if (error)
     return <div className={styles["book_detail"]}>SOMETHING WENT WRONG...</div>;
 
-  // console.log(book);
   return (
     <section className={styles["book_detail"]}>
       <div className={styles["left__section"]}>
@@ -83,9 +102,9 @@ export default function BookDetail() {
           <div className={styles.user}>
             <b>{book.username}</b>
             {currentUser?.id === book.userid ? (
-              <p>Added by you {moment(book.date).fromNow()}</p>
+              <p>Added by you on {new Date(book.date).toDateString()}</p>
             ) : (
-              <p>Added {moment(book.date).fromNow()}</p>
+              <p>Added on {new Date(book.date).toDateString()}</p>
             )}
           </div>
 
@@ -94,7 +113,10 @@ export default function BookDetail() {
               <Link to="/add-book?action=edit" state={book}>
                 <MdOutlineEditNote className={styles.edit} />
               </Link>
-              <MdDeleteForever onClick={deleteBook} className={styles.delete} />
+              <MdDeleteForever
+                onClick={confirmDelete}
+                className={styles.delete}
+              />
             </div>
           )}
         </div>
@@ -116,21 +138,29 @@ export default function BookDetail() {
       </div>
       <div className={styles["right__section"]}>
         <h3>Similar Books</h3>
-        {similarBooks?.map((sb) => (
-          <Link key={sb.id} to={`/book/${sb.slug}`}>
-            <div className={styles.similar}>
-              <img
-                src={sb.bookimg}
-                alt={sb.title}
-                className={styles["s_book__img"]}
-              />
-              <h3>{sb.title}</h3>
-              <p>
-                <b>Genre:</b> {sb.category}
-              </p>
-            </div>
-          </Link>
-        ))}
+
+        {similarBooks?.length === 0 ? (
+          <p>No similar books to {book.title}</p>
+        ) : (
+          similarBooks?.map((sb) => (
+            <Link key={sb.id} to={`/book/${sb.slug}`}>
+              <div className={styles.similar}>
+                <img
+                  src={sb.bookimg}
+                  alt={sb.title}
+                  className={styles["s_book__img"]}
+                />
+                <h3>{sb.title}</h3>
+                <p>
+                  <b>Genre:</b> {sb.category}
+                </p>
+                <p>
+                  <b>Price:</b> ₦{sb.price}
+                </p>
+              </div>
+            </Link>
+          ))
+        )}
       </div>
     </section>
   );

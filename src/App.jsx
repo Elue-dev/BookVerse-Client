@@ -12,6 +12,7 @@ import Auth from "./pages/auth/Auth";
 import Home from "./pages/home/Home";
 import AddBook from "./pages/add_book/AddBook";
 import Dashboard from "./pages/dashboard/Dashboard";
+import Books from "./components/books/Books";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             }
           />
           <Route exact path="/book/:slug" element={<BookDetail />} />
+          <Route exact path="/books" element={<Books />} />
           <Route exact path="/add-book" element={<AddBook />} />
           <Route
             exact

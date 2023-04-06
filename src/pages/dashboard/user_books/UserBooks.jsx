@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { httpRequest } from "../../../../services/httpRequest";
 import moment from "moment";
 import styles from "./user.books.module.scss";
+import { Link } from "react-router-dom";
 
 export default function UserBooks({ currentUser }) {
   const {
@@ -24,21 +25,23 @@ export default function UserBooks({ currentUser }) {
         BookVerse
       </p>
       {books.map((book) => (
-        <div key={book.id} className={styles["book__details"]}>
-          <img src={book.bookimg} />
-          <div>
-            <h3>{book.title}</h3>
-            <p>
-              <b>Genre:</b> {book.category}
-            </p>
-            <p>
-              <b>Price:</b> ₦{book.price}
-            </p>
-            <p>
-              <b>Added:</b> {moment(book.date).fromNow()}
-            </p>
+        <Link to={`/book/${book.slug}`} key={book.id}>
+          <div className={styles["book__details"]}>
+            <img src={book.bookimg} />
+            <div>
+              <h3>{book.title}</h3>
+              <p>
+                <b>Genre:</b> {book.category}
+              </p>
+              <p>
+                <b>Price:</b> ₦{book.price}
+              </p>
+              <p>
+                <b>Added:</b> {moment(book.date).fromNow()}
+              </p>
+            </div>
           </div>
-        </div>
+        </Link>
       ))}
     </section>
   );

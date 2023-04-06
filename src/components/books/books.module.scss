@@ -1,43 +1,17 @@
 @import "../../styles/mixins";
 @import "../../styles/colors";
 
-.featured {
+.books {
   @include container();
-  width: 80%;
   padding-top: 2rem;
-  & > div {
-    @include flexBox(space-between, center);
-    gap: 1rem;
-    p {
-      :first-child {
-        font-size: 2rem;
-      }
-      span {
-        color: #444;
-        b {
-          font-size: 1.3rem !important;
-        }
-      }
-    }
-    img {
-      width: 80%;
-      height: 250px;
-      object-fit: cover;
-      border-radius: 0.3rem;
-    }
-    margin-bottom: 5rem;
-  }
   h2 {
-    text-align: center;
-    margin-top: 2rem;
-    border-top: 1px solid rgb(176, 176, 176);
-    padding-top: 2rem;
+    padding-bottom: 0.3rem;
   }
-  .featured__books {
+
+  .all__books {
     @include grid(repeat(3, 1fr), 3rem);
 
     .books__card {
-      // @include flexBox(space-between, center, column);
       border-radius: 0.3rem;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
       margin-top: 1rem;
