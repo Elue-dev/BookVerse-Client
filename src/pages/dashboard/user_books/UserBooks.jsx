@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { httpRequest } from "../../../../services/httpRequest";
-import moment from "moment";
 import styles from "./user.books.module.scss";
 import { Link } from "react-router-dom";
 
@@ -21,8 +20,11 @@ export default function UserBooks({ currentUser }) {
     <section className={styles["user__books"]}>
       <h3>Books you've added</h3>
       <p>
-        You have added <b style={{ color: "#746ab0" }}>{books.length}</b> to
-        BookVerse
+        You have added{" "}
+        <b style={{ color: "#746ab0" }}>
+          {books.length === 0 ? "No Books" : books.length}
+        </b>{" "}
+        {books.length === 1 ? "Book" : "Books"} to BookVerse
       </p>
       {books.map((book) => (
         <Link to={`/book/${book.slug}`} key={book.id}>
@@ -37,7 +39,7 @@ export default function UserBooks({ currentUser }) {
                 <b>Price:</b> ₦{book.price}
               </p>
               <p>
-                <b>Added:</b> {moment(book.date).fromNow()}
+                <b>Added:</b> {new Date(book.date).toDateString()}
               </p>
             </div>
           </div>

@@ -71,6 +71,15 @@ export default function Dashboard() {
   const updateUserCredentials = async (e) => {
     e.preventDefault();
 
+    if (
+      username === currentUser.username &&
+      !image &&
+      !newPassword &&
+      !oldPassword
+    ) {
+      return errorToast("You have not made any changes to your credentials");
+    }
+
     if (newPassword !== confirmPassword)
       return errorToast("New password credentials do not match");
 

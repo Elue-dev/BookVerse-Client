@@ -46,6 +46,7 @@ export default function Comments({ bookId }) {
   );
 
   const addComment = () => {
+    if (!text) return errorToast("Please add your comment");
     mutation.mutateAsync({
       comment: text,
       bookid: bookId,
@@ -93,22 +94,28 @@ export default function Comments({ bookId }) {
             )}
           </div>
           <div className={styles["book__comments"]}>
-            {comments.map((comment) => (
-              <div className={styles["comment__details"]} key={comment.id}>
-                <img src={comment.userimg} alt={comment.username} />
-                <div>
-                  <p>
-                    <b>{comment.username}</b>
-                  </p>
-                  <p className={styles.username}>{comment.comment}</p>
-                </div>
-                <div className={styles.date}>
-                  <CiClock2 />
-                  {/* {format(new Date(comment.date))} */}
-                  {new Date(comment.date).toDateString()}
-                </div>
-              </div>
-            ))}
+            {comments.length === 0 ? (
+              <p>Be the first to add a comment</p>
+            ) : (
+              <>
+                {comments.map((comment) => (
+                  <div className={styles["comment__details"]} key={comment.id}>
+                    <img src={comment.userimg} alt={comment.username} />
+                    <div>
+                      <p>
+                        <b>{comment.username}</b>
+                      </p>
+                      <p className={styles.username}>{comment.comment}</p>
+                    </div>
+                    <div className={styles.date}>
+                      <CiClock2 />
+                      {/* {format(new Date(comment.date))} */}
+                      {new Date(comment.date).toDateString()}
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
         </>
       )}

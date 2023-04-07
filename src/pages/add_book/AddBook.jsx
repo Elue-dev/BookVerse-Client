@@ -135,6 +135,7 @@ export default function AddBook() {
       title,
       description: parseText(description),
       price,
+      date: new Date(),
       category: genre,
       image: imageUrl,
     });
