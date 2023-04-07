@@ -6,8 +6,15 @@
   margin-top: 2rem;
   display: flex;
   gap: 2.5rem;
+  @include mQ(900px) {
+    display: block;
+  }
   .left__section {
     flex: 2.5;
+    @include mQ(900px) {
+      flex: none;
+      margin-bottom: 2.5rem;
+    }
     button {
       outline: 0;
       border: 0;
@@ -36,6 +43,9 @@
         color: #fff;
         background: rgb(73, 73, 73);
         margin-top: 0;
+        @include mQ(600px) {
+          padding: 0.2rem 1rem;
+        }
       }
       & > div {
         @include flexBox(left, center);

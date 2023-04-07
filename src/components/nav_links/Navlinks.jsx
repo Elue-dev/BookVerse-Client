@@ -1,11 +1,29 @@
-import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FaSearchPlus } from "react-icons/fa";
+import { MdOutlineSearchOff } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { CLOSE_MODAL, SHOW_MODAL } from "../../redux/slices/modal.slice";
 import styles from "./navlinks.module.scss";
-import { BsSearch } from "react-icons/bs";
 
 export default function Navlinks() {
   const location = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [search, setSearch] = useState(false);
 
   if (location.pathname.includes("auth")) return;
+
+  const handleShowSearch = () => {
+    setSearch(true);
+    navigate("/");
+    dispatch(SHOW_MODAL());
+  };
+
+  const handleCloseSearch = () => {
+    dispatch(CLOSE_MODAL());
+    setSearch(false);
+  };
 
   return (
     <div className={styles.navlinks}>
@@ -20,9 +38,17 @@ export default function Navlinks() {
           <Link to="/add-book?action=new">Add Book</Link>
         </li>
         <li className={styles["search__icon"]}>
-          <Link to="/account">
-            <BsSearch />
-          </Link>
+          {search ? (
+            <MdOutlineSearchOff
+              onClick={handleCloseSearch}
+              style={{ fontSize: "1.5rem" }}
+            />
+          ) : (
+            <FaSearchPlus
+              onClick={handleShowSearch}
+              style={{ fontSize: "1.34rem" }}
+            />
+          )}
         </li>
       </ul>
     </div>

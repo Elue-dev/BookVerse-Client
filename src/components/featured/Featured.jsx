@@ -6,8 +6,12 @@ import { BsFillCalendar2PlusFill } from "react-icons/bs";
 import { FaQuoteLeft } from "react-icons/fa";
 import { httpRequest } from "../../../services/httpRequest";
 import image from "../../assets/image1.jpg";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { CLOSE_MODAL } from "../../redux/slices/modal.slice";
 
 export default function featured() {
+  const dispatch = useDispatch();
   const {
     isLoading,
     error,
@@ -18,8 +22,9 @@ export default function featured() {
     })
   );
 
-  if (isLoading)
-    return <div className={styles["featured__books"]}>LOADING...</div>;
+  useEffect(() => {
+    dispatch(CLOSE_MODAL());
+  }, []);
 
   return (
     <section className={styles.featured}>
@@ -37,7 +42,7 @@ export default function featured() {
       </div>
       <h2>FEATURED BOOKS</h2>
       <section className={styles["featured__books"]}>
-        {books.slice(0, 3).map((book) => (
+        {books?.slice(0, 3).map((book) => (
           <div className={styles["books__card"]} key={book.id}>
             <div>
               <img src={book.bookimg} alt="" />

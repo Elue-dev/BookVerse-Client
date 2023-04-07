@@ -5,8 +5,18 @@
   @include container();
   padding-top: 1rem;
   display: flex;
+  @include mQ(900px) {
+    display: block;
+  }
   .left__section {
     flex: 3;
+    @include mQ(900px) {
+      flex: none;
+      width: 110px;
+    }
+    @include mQ(600px) {
+      width: max-content;
+    }
     .top {
       @include flexBox(left, center);
       gap: 0.4rem;
@@ -35,6 +45,10 @@
   }
   .right__section {
     flex: 1;
+    @include mQ(900px) {
+      flex: none;
+      padding-top: 1.4rem;
+    }
     img {
       height: 100px;
       width: 90%;

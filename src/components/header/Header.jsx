@@ -5,7 +5,7 @@ import styles from "./header.module.scss";
 import { useSelector } from "react-redux";
 import { getCurrentUser } from "../../redux/slices/auth.slice";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { httpRequest } from "../../../services/httpRequest";
 
 export default function Header() {
@@ -13,7 +13,6 @@ export default function Header() {
   if (location.pathname.includes("auth")) return;
 
   const [search, setSearch] = useState("");
-  // const [books, setBooks] = useState("");
   const [results, setResults] = useState([]);
   const currentUser = useSelector(getCurrentUser);
 
@@ -27,8 +26,9 @@ export default function Header() {
     })
   );
 
-  if (isLoading) return "Loading...";
-  if (error) return "Something went wrong...";
+  if (isLoading) return <div className={styles.header}>LOADING...</div>;
+  if (error)
+    return <div className={styles.header}>SOMETHING WENT WRONG...</div>;
 
   const getBooks = async () => {
     const filteredBooks = books.filter((book) =>
@@ -62,7 +62,7 @@ export default function Header() {
         />
         {search && (
           <div className={styles["search__results"]}>
-            {results.length === 0 && <p>No books found.</p>}
+            {results.length === 0 && <p>No Books Found.</p>}
             {results?.map((book) => (
               <Link
                 key={book.id}

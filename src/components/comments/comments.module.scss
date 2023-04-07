@@ -6,6 +6,9 @@
   .header {
     @include flexBox(left, center);
     gap: 0.3rem;
+    @include mQ(600px) {
+      padding-bottom: 0.4rem;
+    }
     span {
       @include flexBox(left, center);
       gap: 0.3rem;
@@ -26,6 +29,9 @@
     & > div {
       @include flexBox(left, center);
       gap: 0.3rem;
+      @include mQ(600px) {
+        width: 110%;
+      }
       img {
         width: 45px;
         height: 45px;
@@ -56,11 +62,20 @@
     max-width: 1200px;
     width: 80%;
     margin: auto;
+    @include mQ(600px) {
+      width: 100%;
+    }
     .comment__details {
       @include flexBox(left, center);
       gap: 0.6rem;
       padding: 1rem 0;
       border-bottom: 0.5px solid rgb(231, 231, 231);
+      @include mQ(600px) {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
       img {
         width: 45px;
         height: 45px;
@@ -73,9 +88,13 @@
       }
       .date {
         margin-left: auto;
-        color: #444;
+        color: rgb(139, 139, 139);
         @include flexBox(left, center);
         gap: 0.2rem;
+        @include mQ(600px) {
+          margin-left: 0;
+          font-size: 0.8rem;
+        }
       }
     }
   }

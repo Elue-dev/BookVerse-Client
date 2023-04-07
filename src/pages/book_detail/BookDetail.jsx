@@ -137,7 +137,7 @@ export default function BookDetail() {
         </div>
       </div>
       <div className={styles["right__section"]}>
-        <h3>Similar Books</h3>
+        <h2>Similar Books</h2>
 
         {similarBooks?.length === 0 ? (
           <p>No similar books to {book.title}</p>

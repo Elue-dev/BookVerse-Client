@@ -18,6 +18,7 @@
     }
     .search__icon {
       display: none;
+      color: #fff;
       @include mQ(600px) {
         display: block;
       }

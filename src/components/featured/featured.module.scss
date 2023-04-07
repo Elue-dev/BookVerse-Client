@@ -8,6 +8,9 @@
   & > div {
     @include flexBox(space-between, center);
     gap: 1rem;
+    @include mQ(900px) {
+      flex-direction: column-reverse;
+    }
     p {
       :first-child {
         font-size: 2rem;
@@ -24,6 +27,9 @@
       height: 250px;
       object-fit: cover;
       border-radius: 0.3rem;
+      @include mQ(600px) {
+        width: 100%;
+      }
     }
     margin-bottom: 5rem;
   }
@@ -35,6 +41,12 @@
   }
   .featured__books {
     @include grid(repeat(3, 1fr), 3rem);
+    @include mQ(900px) {
+      @include grid(repeat(2, 1fr), 2rem);
+    }
+    @include mQ(500px) {
+      @include grid(1fr, 1rem);
+    }
 
     .books__card {
       // @include flexBox(space-between, center, column);

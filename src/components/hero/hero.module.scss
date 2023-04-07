@@ -20,6 +20,68 @@
     opacity: 0.7;
     z-index: -1;
   }
+  .modal {
+    text-align: center;
+    position: relative;
+    left: 23rem;
+    display: none;
+    z-index: 200;
+    @include mQ(600px) {
+      &.active {
+        left: 0;
+        display: block;
+      }
+    }
+
+    input {
+      background: #444;
+      padding: 0.5rem;
+      border-top-left-radius: 0.4rem;
+      border-top-right-radius: 0.4rem;
+      width: 95%;
+      margin-top: 0.4rem;
+      outline: 0;
+      border: 0;
+      color: #fff;
+      transition: left 1s ease;
+      &:hover,
+      &:focus {
+        border: 0.5px solid #222;
+        border-bottom: 2px solid #222;
+      }
+    }
+  }
+  .search__results {
+    text-align: center;
+    background: #444;
+    width: 95%;
+    margin: auto;
+    padding: 0.5rem;
+    border-bottom-left-radius: 0.4rem;
+    border-bottom-right-radius: 0.4rem;
+    .search__details {
+      @include flexBox(left, center);
+      text-align: left;
+      gap: 0.5rem;
+      border-radius: 0.4rem;
+      background-color: rgb(238, 237, 237);
+      border: 0.5px solid $mainColor;
+      color: #444;
+      padding: 0.3rem;
+      z-index: 10000000;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      margin-bottom: 0.4rem;
+      cursor: pointer;
+    }
+    img {
+      width: 50px;
+      height: 50px;
+    }
+    a {
+      text-decoration: none;
+      color: initial;
+    }
+  }
   .hero__content {
     position: absolute;
     top: 50%;
