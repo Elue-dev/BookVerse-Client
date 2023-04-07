@@ -41,6 +41,10 @@ main {
     transform: translate(-50%, -50%);
     color: #333;
     width: 400px;
+    @include mQ(600px) {
+      color: #333;
+      width: 90%;
+    }
     .auth__contents {
       background: #fff;
       box-shadow: $box-shadow;

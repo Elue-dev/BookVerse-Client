@@ -15,7 +15,7 @@
       width: 110px;
     }
     @include mQ(600px) {
-      width: max-content;
+      width: 110%;
     }
     .top {
       @include flexBox(left, center);
@@ -53,6 +53,9 @@
       height: 100px;
       width: 90%;
       object-fit: cover;
+      @include mQ(600px) {
+        width: 100%;
+      }
     }
     p {
       color: $mainColor;

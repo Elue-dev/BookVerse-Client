@@ -92,9 +92,11 @@ export default function Header() {
             <BiUserCircle className={styles.user} />
           </Link>
         )}
-        <span className={styles.dropdown}>
-          <GoTriangleDown />
-        </span>
+        {currentUser && (
+          <span className={styles.dropdown}>
+            <GoTriangleDown />
+          </span>
+        )}
       </div>
     </header>
   );

@@ -50,6 +50,7 @@
       & > div {
         @include flexBox(left, center);
         gap: 1rem;
+        padding-top: 3rem;
         img {
           height: 100px;
           width: 100px;

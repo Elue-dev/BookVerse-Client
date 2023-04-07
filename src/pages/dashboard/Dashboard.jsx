@@ -125,7 +125,7 @@ export default function Dashboard() {
     setLoading(true);
 
     try {
-      const response = await axios.post(`${SERVER_URL}/auth/logout`, {});
+      const response = await httpRequest.post(`${SERVER_URL}/auth/logout`);
       setLoading(false);
       dispatch(REMOVE_ACTIVE_USER());
       response && navigate("/");
