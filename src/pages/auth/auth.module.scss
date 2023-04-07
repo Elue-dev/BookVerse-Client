@@ -56,6 +56,9 @@ main {
         padding: 0 0.5rem 1rem 0.5rem;
         font-weight: 700;
         text-align: center;
+        text-transform: uppercase;
+        font-size: 1rem;
+
         & > div {
           transition: background 0.1s ease-in-out;
           @include flexBox(center, center);
@@ -85,8 +88,13 @@ main {
             border-radius: 0.3rem;
             width: 100%;
             outline: 0;
+            font-size: 1rem;
+            @include mQ(600px) {
+              padding: 0.7rem;
+            }
             &::placeholder {
               color: rgb(152, 149, 149);
+              font-size: 1rem;
             }
           }
         }
@@ -94,8 +102,10 @@ main {
           @include button();
           background: $mainColor;
           color: #fff;
-          padding: 0.5rem 1rem;
+          padding: 0.7rem 1rem;
           width: 100%;
+          text-transform: uppercase;
+          font-size: 1.2rem;
         }
         .name {
           display: flex;
