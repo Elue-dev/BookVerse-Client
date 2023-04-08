@@ -33,7 +33,7 @@
       .book__details {
         padding: 1rem;
         @include flexBox(left, left, column);
-        border-bottom: 4px solid $mainColor;
+        border-right: 4px solid $mainColor;
         gap: 0.3rem;
         :nth-child(2) {
           font-weight: 500;

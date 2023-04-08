@@ -49,9 +49,9 @@ function App() {
             exact
             path="/dashboard"
             element={
-              <Authenticated>
-                <Dashboard />
-              </Authenticated>
+              // <Authenticated>
+              <Dashboard />
+              // </Authenticated>
             }
           />
         </Routes>
