@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import {
   getCurrentUser,
+  getUserToken,
   REMOVE_ACTIVE_USER,
   SET_ACTIVE_USER,
 } from "../../redux/slices/auth.slice";
@@ -19,7 +20,6 @@ import { PulseLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 import UserBooks from "./user_books/UserBooks";
 import { CiLogout } from "react-icons/ci";
-import axios from "axios";
 
 export default function Dashboard() {
   const currentUser = useSelector(getCurrentUser);
@@ -34,9 +34,11 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const token = useSelector(getUserToken);
   const imageRef = useRef();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const authHeaders = { headers: { authorization: `Bearer ${token}` } };
 
   const { username, oldPassword, newPassword, confirmPassword } = credentials;
 
@@ -95,9 +97,11 @@ export default function Dashboard() {
         confirmPassword,
         image: imageUrl || currentUser.img,
       };
+
       const response = await httpRequest.patch(
         `${SERVER_URL}/users/${currentUser.id}`,
-        userDetails
+        userDetails,
+        authHeaders
       );
 
       if (response) {

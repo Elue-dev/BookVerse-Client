@@ -4,6 +4,7 @@ const initialState = {
   isLoggedIn: false,
   user: null,
   previousURL: "",
+  token: null,
 };
 
 const auth_slice = createSlice({
@@ -13,6 +14,9 @@ const auth_slice = createSlice({
     SET_ACTIVE_USER: (state, action) => {
       state.isLoggedIn = true;
       state.user = action.payload;
+    },
+    SET_USER_TOKEN: (state, action) => {
+      state.token = action.payload;
     },
     REMOVE_ACTIVE_USER: (state) => {
       state.isLoggedIn = false;
@@ -25,11 +29,12 @@ const auth_slice = createSlice({
   },
 });
 
-export const { SET_ACTIVE_USER, REMOVE_ACTIVE_USER, SAVE_URL } =
+export const { SET_ACTIVE_USER, REMOVE_ACTIVE_USER, SAVE_URL, SET_USER_TOKEN } =
   auth_slice.actions;
 
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
 export const getCurrentUser = (state) => state.auth.user;
+export const getUserToken = (state) => state.auth.token;
 export const selectPreviousURL = (state) => state.auth.previousURL;
 
 export default auth_slice.reducer;

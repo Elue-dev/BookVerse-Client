@@ -7,7 +7,7 @@ import { MdOutlineArrowDropUp } from "react-icons/md";
 import { CiClock2 } from "react-icons/ci";
 import { useSelector } from "react-redux";
 import styles from "./comments.module.scss";
-import { getCurrentUser } from "../../redux/slices/auth.slice";
+import { getCurrentUser, getUserToken } from "../../redux/slices/auth.slice";
 import { errorToast, successToast } from "../../../utils/alerts";
 import { Link } from "react-router-dom";
 import moment from "moment";
@@ -16,13 +16,15 @@ export default function Comments({ bookId }) {
   const currentUser = useSelector(getCurrentUser);
   const [showComments, setShowComments] = useState(false);
   const [text, setText] = useState("");
+  const token = useSelector(getUserToken);
+  const authHeaders = { headers: { authorization: `Bearer ${token}` } };
 
   const {
     isLoading,
     error,
     data: comments,
   } = useQuery([`comment-${bookId}`], () =>
-    httpRequest.get(`/comments?bookid=${bookId}`).then((res) => {
+    httpRequest.get(`/comments?bookid=${bookId}`, authHeaders).then((res) => {
       return res.data;
     })
   );
@@ -31,7 +33,7 @@ export default function Comments({ bookId }) {
 
   const mutation = useMutation(
     (newComment) => {
-      return httpRequest.post("/comments", newComment);
+      return httpRequest.post("/comments", newComment, authHeaders);
     },
     {
       onSuccess: (data) => {

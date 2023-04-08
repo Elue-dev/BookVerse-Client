@@ -10,6 +10,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { PulseLoader } from "react-spinners";
 import moment from "moment";
 import { httpRequest } from "../../../services/httpRequest";
+import { useSelector } from "react-redux";
+import { getUserToken } from "../../redux/slices/auth.slice";
 
 export default function AddBook() {
   const state = useLocation().state;
@@ -22,6 +24,8 @@ export default function AddBook() {
   const imageRef = useRef();
   const [imagePreview, setImagePreview] = useState(null);
   const navigate = useNavigate();
+  const token = useSelector(getUserToken);
+  const authHeaders = { headers: { authorization: `Bearer ${token}` } };
 
   const queryString = useLocation().search;
   const queryParams = new URLSearchParams(queryString);
@@ -72,7 +76,7 @@ export default function AddBook() {
 
   const mutation = useMutation(
     (newBook) => {
-      return httpRequest.post("/books", newBook);
+      return httpRequest.post("/books", newBook, authHeaders);
     },
     {
       onSuccess: (data) => {
@@ -90,7 +94,7 @@ export default function AddBook() {
 
   const updateMutation = useMutation(
     (updatedbook) => {
-      return httpRequest.patch(`/books/${state.id}`, updatedbook);
+      return httpRequest.patch(`/books/${state.id}`, updatedbook, authHeaders);
     },
     {
       onSuccess: (data) => {

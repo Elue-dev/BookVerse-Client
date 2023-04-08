@@ -82,8 +82,9 @@ export default function BookDetail() {
     (b) => b.category === book?.category && b.id !== book.id
   );
 
-  if (isLoading) return <div className={styles["book_detail"]}>LOADING...</div>;
-  if (error)
+  if (isLoading || loading)
+    return <div className={styles["book_detail"]}>LOADING...</div>;
+  if (error || err)
     return <div className={styles["book_detail"]}>SOMETHING WENT WRONG...</div>;
 
   return (

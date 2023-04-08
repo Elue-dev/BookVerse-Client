@@ -16,7 +16,7 @@ import {
 import { errorToast, successToast } from "../../../utils/alerts";
 import { BiBookReader } from "react-icons/bi";
 import { useDispatch } from "react-redux";
-import { SET_ACTIVE_USER } from "../../redux/slices/auth.slice";
+import { SET_ACTIVE_USER, SET_USER_TOKEN } from "../../redux/slices/auth.slice";
 import { httpRequest } from "../../../services/httpRequest";
 
 const initialState = {
@@ -77,8 +77,10 @@ export default function Auth() {
         `${SERVER_URL}/auth/login`,
         credentials
       );
+      console.log(response);
       setLoading(false);
-      dispatch(SET_ACTIVE_USER(response.data));
+      dispatch(SET_ACTIVE_USER(response.data.user));
+      dispatch(SET_USER_TOKEN(response.data.accessToken));
       response && navigate("/");
     } catch (error) {
       setLoading(false);
