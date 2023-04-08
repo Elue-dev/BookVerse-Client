@@ -34,7 +34,9 @@ function App() {
           />
           <Route exact path="/book/:slug" element={<BookDetail />} />
           <Route exact path="/books" element={<Books />} />
-          <Route exact path="/add-book" element={<AddBook />} />
+          <Authenticated>
+            <Route exact path="/add-book" element={<AddBook />} />
+          </Authenticated>
           <Route
             exact
             path="/dashboard"
