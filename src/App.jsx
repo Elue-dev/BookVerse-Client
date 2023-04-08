@@ -27,9 +27,9 @@ function App() {
           <Route
             path="/auth"
             element={
-              <Unauthenticated>
-                <Auth />
-              </Unauthenticated>
+              // <Unauthenticated>
+              <Auth />
+              // </Unauthenticated>
             }
           />
           <Route exact path="/book/:slug" element={<BookDetail />} />
@@ -49,9 +49,9 @@ function App() {
             exact
             path="/dashboard"
             element={
-              // <Authenticated>
-              <Dashboard />
-              // </Authenticated>
+              <Authenticated>
+                <Dashboard />
+              </Authenticated>
             }
           />
         </Routes>
