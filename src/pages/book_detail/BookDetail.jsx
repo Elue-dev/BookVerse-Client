@@ -4,6 +4,7 @@ import { httpRequest } from "../../../services/httpRequest";
 import Comments from "../../components/comments/Comments";
 import { MdDeleteForever, MdOutlineEditNote } from "react-icons/md";
 import { useSelector } from "react-redux";
+import moment from "moment";
 import { getCurrentUser } from "../../redux/slices/auth.slice";
 import { errorToast, successToast } from "../../../utils/alerts";
 import Notiflix from "notiflix";
@@ -102,9 +103,9 @@ export default function BookDetail() {
           <div className={styles.user}>
             <b>{book.username}</b>
             {currentUser?.id === book.userid ? (
-              <p>Added by you on {new Date(book.date).toDateString()}</p>
+              <p>Added by you {moment(book.date).fromNow()}</p>
             ) : (
-              <p>Added on {new Date(book.date).toDateString()}</p>
+              <p>Added {moment(book.date).fromNow()}</p>
             )}
           </div>
 

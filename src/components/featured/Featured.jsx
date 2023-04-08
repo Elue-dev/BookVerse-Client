@@ -50,7 +50,7 @@ export default function featured() {
             <div className={styles["book__details"]}>
               <h3>{book.title}</h3>
               <p>
-                <BsFillCalendar2PlusFill /> {new Date(book.date).toDateString()}
+                <BsFillCalendar2PlusFill /> {moment(book.date).fromNow()}
               </p>
               <p>{book.description.substring(0, 90)}...</p>
               <div className={styles.bottom}>

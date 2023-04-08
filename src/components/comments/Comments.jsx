@@ -10,7 +10,7 @@ import styles from "./comments.module.scss";
 import { getCurrentUser } from "../../redux/slices/auth.slice";
 import { errorToast, successToast } from "../../../utils/alerts";
 import { Link } from "react-router-dom";
-import { format, render, cancel, register } from "timeago.js";
+import moment from "moment";
 
 export default function Comments({ bookId }) {
   const currentUser = useSelector(getCurrentUser);
@@ -109,8 +109,7 @@ export default function Comments({ bookId }) {
                     </div>
                     <div className={styles.date}>
                       <CiClock2 />
-                      {/* {format(new Date(comment.date))} */}
-                      {new Date(comment.date).toDateString()}
+                      {moment(comment.date).fromNow()}
                     </div>
                   </div>
                 ))}

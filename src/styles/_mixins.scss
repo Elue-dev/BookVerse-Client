@@ -41,9 +41,6 @@
   }
 }
 
-$mainColor: #746ab0;
-$box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-
 @include mQ(600px) {
   .section {
     background: rgba(0, 0, 0, 0.7);
@@ -55,3 +52,6 @@ $box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     height: 100vh;
   }
 }
+
+$mainColor: #746ab0;
+$box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
