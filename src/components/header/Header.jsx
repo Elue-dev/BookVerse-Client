@@ -26,7 +26,7 @@ export default function Header() {
     })
   );
 
-  if (isLoading) return <div className={styles.header}>LOADING...</div>;
+  if (isLoading) return <div className="loading">LOADING...</div>;
   if (error)
     return <div className={styles.header}>SOMETHING WENT WRONG...</div>;
 

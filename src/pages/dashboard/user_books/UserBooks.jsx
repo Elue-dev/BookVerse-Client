@@ -36,13 +36,25 @@ export default function UserBooks({ currentUser }) {
 
   return (
     <section className={styles["user__books"]}>
-      <h3>Books you've added</h3>
-      <p>
-        You have not added any book on BookVerse.{" "}
-        <Link to="/add-book?action=new">
-          <b style={{ color: "#746ab0" }}>Start adding some</b>{" "}
-        </Link>
-      </p>
+      <h2>Books you've added</h2>
+
+      {books.length === 0 ? (
+        <p>
+          You have not added any book on BookVerse.{" "}
+          <Link to="/add-book?action=new">
+            <b style={{ color: "#746ab0" }}>Start adding some</b>{" "}
+          </Link>
+        </p>
+      ) : (
+        <p>
+          You have added{" "}
+          <b style={{ color: "#746ab0" }}>
+            {books.length} {books.length == 1 ? "book" : "books"}
+          </b>{" "}
+          to BookVerse
+        </p>
+      )}
+
       {books.map((book) => (
         <Link to={`/book/${book.slug}`} key={book.id}>
           <div className={styles["book__details"]}>
@@ -64,7 +76,7 @@ export default function UserBooks({ currentUser }) {
       ))}
       <br />
 
-      <h3>Books you've purchased</h3>
+      <h2>Books you've purchased</h2>
       <p>You have not purchased any book on BookVerse.</p>
       {transactions.map((transaction) => (
         <Link to={`/book/${transaction.slug}`} key={transaction.transaction_id}>
