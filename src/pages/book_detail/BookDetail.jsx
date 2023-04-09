@@ -42,7 +42,7 @@ export default function BookDetail() {
   );
 
   const { data: transactions } = useQuery(
-    [`transactions-${currentUser.id}`],
+    [`transactions-${currentUser?.id}`],
     () =>
       httpRequest
         .get(`/transactions/all?bookId=${book?.id}`, authHeaders)
@@ -143,7 +143,7 @@ export default function BookDetail() {
   );
 
   const myTransactions = transactions?.filter(
-    (t) => t.slug === slug && t.user_id === currentUser.id
+    (t) => t.slug === slug && t.user_id === currentUser?.id
   )[0];
 
   useEffect(() => {

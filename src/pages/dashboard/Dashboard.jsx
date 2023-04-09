@@ -114,7 +114,7 @@ export default function Dashboard() {
             `${response.data.message}. You changed your password, Please log in again`
           );
           dispatch(REMOVE_ACTIVE_USER());
-          navigate("/auth");
+          navigate("/");
         } else {
           successToast(response.data.message);
         }
