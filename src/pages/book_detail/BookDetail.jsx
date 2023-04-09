@@ -96,7 +96,7 @@ export default function BookDetail() {
 
   const saveTransaction = async (tId) => {
     try {
-      await httpRequest.post(
+      const response = await httpRequest.post(
         "/transactions",
         {
           bookId: book.id,
@@ -104,9 +104,14 @@ export default function BookDetail() {
         },
         authHeaders
       );
+      if (response) {
+        successToast(
+          "Transaction successful. You would hear from us and get your book soon!"
+        );
+      }
     } catch (error) {
-      errorToast("Something went wrong");
-      console.log(error);
+      errorToast("Something went wrong. Please try again.");
+      // console.log(error);
     }
   };
 
@@ -123,13 +128,10 @@ export default function BookDetail() {
         paystack.newTransaction({
           key: import.meta.env.VITE_PAYSTACK_KEY,
           amount: book.price * 100,
-          email: "legaalninja@gmail.com",
+          email: currentUser.email,
           name: currentUser.username,
           onSuccess() {
             saveTransaction(paystack.id);
-            successToast(
-              "Transaction successful. You would hear from us and get your book soon!"
-            );
           },
           onCancel() {
             errorToast("Transaction Cancelled ⛔️");
