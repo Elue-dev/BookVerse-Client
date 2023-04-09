@@ -110,7 +110,13 @@ export default function BookDetail() {
     }
   };
 
-  const checkout = () => {
+  const buyBook = () => {
+    if (!currentUser) {
+      errorToast("Please login to purchase book");
+      navigate("/auth");
+      return;
+    }
+
     const initiatePayment = () => {
       try {
         const paystack = new PaystackPop();
@@ -216,7 +222,7 @@ export default function BookDetail() {
           </p>
           <p>{book.description}</p>
 
-          <button className={styles["purchase__btn"]} onClick={checkout}>
+          <button className={styles["purchase__btn"]} onClick={buyBook}>
             Buy Book
           </button>
         </div>
