@@ -77,7 +77,18 @@ export default function UserBooks({ currentUser }) {
       <br />
 
       <h2>Books you've purchased</h2>
-      <p>You have not purchased any book on BookVerse.</p>
+      {transactions.length > 0 ? (
+        <p>
+          You have purchased{" "}
+          <b style={{ color: "#746ab0" }}>
+            {transactions.length} {transactions.length === 1 ? "book" : "books"}{" "}
+          </b>{" "}
+          on BookVerse.
+        </p>
+      ) : (
+        <p>You have not purchased any book on BookVerse.</p>
+      )}
+
       {transactions.map((transaction) => (
         <Link to={`/book/${transaction.slug}`} key={transaction.transaction_id}>
           <div className={styles["book__details"]}>
