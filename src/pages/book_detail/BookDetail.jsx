@@ -149,7 +149,6 @@ export default function BookDetail() {
   useEffect(() => {
     let userIds = [];
     transactions?.map((t) => userIds.push(t.user_id));
-    console.log({ userIds });
     if (userIds.includes(currentUser?.id)) {
       setIsPurchased(true);
     } else {

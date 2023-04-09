@@ -96,10 +96,12 @@
         border-radius: 0.5rem;
         padding: 0.4rem 1.4rem;
         cursor: pointer;
+        margin-bottom: 1rem;
       }
     }
     .comments__container {
       width: 90%;
+      border-top: 0.5px solid rgb(232, 232, 232);
     }
   }
   .right__section {
