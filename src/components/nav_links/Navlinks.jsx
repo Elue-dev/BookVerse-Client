@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaSearchPlus } from "react-icons/fa";
 import { MdOutlineSearchOff } from "react-icons/md";
@@ -7,12 +7,16 @@ import { CLOSE_MODAL, SHOW_MODAL } from "../../redux/slices/modal.slice";
 import styles from "./navlinks.module.scss";
 
 export default function Navlinks() {
-  const location = useLocation();
+  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [search, setSearch] = useState(false);
 
-  if (location.pathname.includes("auth")) return;
+  if (pathname.includes("auth")) return;
+
+  useEffect(() => {
+    setSearch(false);
+  }, [pathname]);
 
   const handleShowSearch = () => {
     setSearch(true);
