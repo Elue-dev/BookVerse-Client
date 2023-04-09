@@ -5,11 +5,15 @@ import { BsDot } from "react-icons/bs";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { MdOutlineArrowDropUp } from "react-icons/md";
 import { CiClock2 } from "react-icons/ci";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./comments.module.scss";
-import { getCurrentUser, getUserToken } from "../../redux/slices/auth.slice";
+import {
+  getCurrentUser,
+  getUserToken,
+  SAVE_URL,
+} from "../../redux/slices/auth.slice";
 import { errorToast, successToast } from "../../../utils/alerts";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
 
 export default function Comments({ bookId }) {
@@ -17,6 +21,9 @@ export default function Comments({ bookId }) {
   const [showComments, setShowComments] = useState(false);
   const [text, setText] = useState("");
   const token = useSelector(getUserToken);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { pathname } = useLocation();
   const authHeaders = { headers: { authorization: `Bearer ${token}` } };
 
   const {
@@ -56,6 +63,11 @@ export default function Comments({ bookId }) {
     setText("");
   };
 
+  const redirect = () => {
+    dispatch(SAVE_URL(pathname));
+    navigate("/auth");
+  };
+
   if (isLoading) return "Loading...";
 
   return (
@@ -70,9 +82,9 @@ export default function Comments({ bookId }) {
           {showComments ? <MdOutlineArrowDropUp /> : <IoMdArrowDropdown />}
         </span>
         {!currentUser && (
-          <Link to="/auth" className={styles.nouser}>
+          <div className={styles.nouser} onClick={redirect}>
             <p>Login to comment</p>
-          </Link>
+          </div>
         )}
       </div>
 

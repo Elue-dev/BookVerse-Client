@@ -120,7 +120,7 @@ export default function AddBook() {
       },
       onError: (err) => {
         setLoading(false);
-        errorToast(err.response.data.message);
+        errorToast("Something went wrong");
         console.log("ERROR", err);
       },
     }

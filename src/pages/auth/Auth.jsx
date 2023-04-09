@@ -87,11 +87,11 @@ export default function Auth() {
       dispatch(SET_ACTIVE_USER(response.data.user));
       dispatch(SET_USER_TOKEN(response.data.accessToken));
 
-      if (response && !previousURL) {
-        navigate("/");
-      } else {
+      if (response && previousURL.includes("book")) {
         navigate(-1);
         dispatch(SAVE_URL(null));
+      } else {
+        navigate("/");
       }
     } catch (error) {
       setLoading(false);
