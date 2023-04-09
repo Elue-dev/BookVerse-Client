@@ -142,7 +142,7 @@ export default function BookDetail() {
     (b) => b.category === book?.category && b.id !== book.id
   );
 
-  const myTransactions = transactions.filter(
+  const myTransactions = transactions?.filter(
     (t) => t.slug === slug && t.user_id === currentUser.id
   )[0];
 
@@ -172,10 +172,13 @@ export default function BookDetail() {
             className={styles["book__img"]}
           />
         </a>
-        <p className={styles.pdate}>
-          You purchased this book on{" "}
-          {new Date(myTransactions.transaction_date).toDateString()}
-        </p>
+
+        {isPurchased && (
+          <p className={styles.pdate}>
+            You purchased this book on{" "}
+            {new Date(myTransactions?.transaction_date).toDateString()}
+          </p>
+        )}
         <div className={styles["added__by"]}>
           <img
             src={book.userimg}
