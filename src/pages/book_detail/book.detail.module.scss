@@ -112,11 +112,15 @@
       border-top: 0.5px solid rgb(216, 216, 216);
     }
     h2 {
-      padding-bottom: 1rem;
       color: #000;
       font-weight: 700;
       text-transform: uppercase;
       font-size: 1.3rem;
+    }
+    & > p {
+      padding-bottom: 1rem;
+      font-size: 1.1rem;
+      color: lighten($mainColor, 20%);
     }
     h3 {
       color: $mainColor;
