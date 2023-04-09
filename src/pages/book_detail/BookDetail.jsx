@@ -189,7 +189,7 @@ export default function BookDetail() {
         )}
         <div className={styles["added__by"]}>
           <img
-            src={book.userimg}
+            src={book.user_img}
             alt={book.username}
             className={styles["user__img"]}
           />
