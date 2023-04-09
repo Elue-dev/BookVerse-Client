@@ -12,11 +12,11 @@ export default function Navlinks() {
   const navigate = useNavigate();
   const [search, setSearch] = useState(false);
 
-  if (pathname.includes("auth")) return;
-
   useEffect(() => {
     setSearch(false);
   }, [pathname]);
+
+  if (pathname.includes("auth")) return;
 
   const handleShowSearch = () => {
     setSearch(true);
