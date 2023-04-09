@@ -78,7 +78,7 @@ export default function Books() {
                 <Link to={`/book/${book.slug}`}>
                   <button>See Details</button>
                 </Link>
-                <p>₦{book.price}</p>
+                <p>₦{new Intl.NumberFormat().format(book.price)}</p>
               </div>
             </div>
           </div>

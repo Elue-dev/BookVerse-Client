@@ -221,7 +221,7 @@ export default function BookDetail() {
             <b>Genre:</b> {book.category}
           </p>
           <p>
-            <b>Price:</b> ₦{book.price}
+            <b>Price:</b> ₦{new Intl.NumberFormat().format(book.price)}
           </p>
           <br />
           <p>{book.description}</p>
@@ -254,7 +254,7 @@ export default function BookDetail() {
                   <b>Genre:</b> {sb.category}
                 </p>
                 <p>
-                  <b>Price:</b> ₦{sb.price}
+                  <b>Price:</b> ₦{new Intl.NumberFormat().format(sb.price)}
                 </p>
               </div>
             </Link>

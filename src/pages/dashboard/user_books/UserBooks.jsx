@@ -65,7 +65,7 @@ export default function UserBooks({ currentUser }) {
                 <b>Genre:</b> {book.category}
               </p>
               <p>
-                <b>Price:</b> ₦{book.price}
+                <b>Price:</b> ₦{new Intl.NumberFormat().format(book.price)}
               </p>
               <p>
                 <b>Added:</b> {new Date(book.date).toDateString()}
@@ -88,7 +88,8 @@ export default function UserBooks({ currentUser }) {
                 <b>Genre:</b> {transaction.category}
               </p>
               <p>
-                <b>Price:</b> ₦{transaction.price}
+                <b>Price:</b> ₦
+                {new Intl.NumberFormat().format(transaction.price)}
               </p>
               <p>
                 <b>Purchased:</b>{" "}
