@@ -5,15 +5,21 @@ import Comments from "../../components/comments/Comments";
 import { MdDeleteForever, MdOutlineEditNote } from "react-icons/md";
 import { useSelector } from "react-redux";
 import moment from "moment";
-import { getCurrentUser } from "../../redux/slices/auth.slice";
+import { getCurrentUser, getUserToken } from "../../redux/slices/auth.slice";
 import { errorToast, successToast } from "../../../utils/alerts";
 import Notiflix from "notiflix";
 import styles from "./book.detail.module.scss";
+import PaystackPop from "@paystack/inline-js";
+import { useEffect, useState } from "react";
 
 export default function BookDetail() {
+  const [isPurchased, setIsPurchased] = useState(false);
   const { slug } = useParams();
   const currentUser = useSelector(getCurrentUser);
   const navigate = useNavigate();
+  const token = useSelector(getUserToken);
+
+  const authHeaders = { headers: { authorization: `Bearer ${token}` } };
 
   const {
     isLoading,
@@ -33,6 +39,16 @@ export default function BookDetail() {
     httpRequest.get(`/books`).then((res) => {
       return res.data.books;
     })
+  );
+
+  const { data: transactions } = useQuery(
+    [`transactions-${currentUser.id}`],
+    () =>
+      httpRequest
+        .get(`/transactions/all?bookId=${book?.id}`, authHeaders)
+        .then((res) => {
+          return res.data;
+        })
   );
 
   const queryClient = useQueryClient();
@@ -78,9 +94,68 @@ export default function BookDetail() {
     mutation.mutate();
   };
 
+  const saveTransaction = async (tId) => {
+    try {
+      await httpRequest.post(
+        "/transactions",
+        {
+          bookId: book.id,
+          transactionId: tId,
+        },
+        authHeaders
+      );
+    } catch (error) {
+      errorToast("Something went wrong");
+      console.log(error);
+    }
+  };
+
+  const checkout = () => {
+    const initiatePayment = () => {
+      try {
+        const paystack = new PaystackPop();
+        paystack.newTransaction({
+          key: import.meta.env.VITE_PAYSTACK_KEY,
+          amount: book.price * 100,
+          email: "legaalninja@gmail.com",
+          name: currentUser.username,
+          onSuccess() {
+            saveTransaction(paystack.id);
+            successToast(
+              "Transaction successful. You would hear from us and get your book soon!"
+            );
+          },
+          onCancel() {
+            errorToast("Transaction Cancelled 🙁");
+            console.log("");
+          },
+        });
+      } catch (err) {
+        console.log(err);
+        errorToast("failed transaction" + err);
+      }
+    };
+    initiatePayment();
+  };
+
   const similarBooks = books?.filter(
     (b) => b.category === book?.category && b.id !== book.id
   );
+
+  const myTransactions = transactions.filter(
+    (t) => t.slug === slug && t.user_id === currentUser.id
+  )[0];
+
+  useEffect(() => {
+    let userIds = [];
+    transactions?.map((t) => userIds.push(t.user_id));
+    console.log({ userIds });
+    if (userIds.includes(currentUser?.id)) {
+      setIsPurchased(true);
+    } else {
+      setIsPurchased(false);
+    }
+  }, [transactions]);
 
   if (isLoading || loading)
     return <div className="loading">LOADING BOOK...</div>;
@@ -97,6 +172,10 @@ export default function BookDetail() {
             className={styles["book__img"]}
           />
         </a>
+        <p className={styles.pdate}>
+          You purchased this book on{" "}
+          {new Date(myTransactions.transaction_date).toDateString()}
+        </p>
         <div className={styles["added__by"]}>
           <img
             src={book.userimg}
@@ -134,6 +213,10 @@ export default function BookDetail() {
             <b>Price:</b> ₦{book.price}
           </p>
           <p>{book.description}</p>
+
+          <button className={styles["purchase__btn"]} onClick={checkout}>
+            Buy Book
+          </button>
         </div>
 
         <div className={styles["comments__container"]}>

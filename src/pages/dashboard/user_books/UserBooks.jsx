@@ -4,6 +4,7 @@ import styles from "./user.books.module.scss";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getUserToken } from "../../../redux/slices/auth.slice";
+import moment from "moment";
 
 export default function UserBooks({ currentUser }) {
   const token = useSelector(getUserToken);
@@ -19,15 +20,25 @@ export default function UserBooks({ currentUser }) {
     })
   );
 
-  if (isLoading) return <div className="loading">LOADING YOUR BOOKS...</div>;
-  if (error) return "SOMETHING WENT WRONG......";
+  const {
+    isLoading: loading,
+    error: err,
+    data: transactions,
+  } = useQuery([`transactions-${currentUser.id}`], () =>
+    httpRequest.get("/transactions", authHeaders).then((res) => {
+      return res.data;
+    })
+  );
+
+  if (isLoading || loading)
+    return <div className="loading">LOADING YOUR BOOKS...</div>;
+  if (error || err) return "SOMETHING WENT WRONG......";
 
   return (
     <section className={styles["user__books"]}>
       <h3>Books you've added</h3>
       <p>
-        You have added <b>{books.length === 0 ? "No Books" : books.length}</b>{" "}
-        {books.length === 1 ? "Book" : "Books"} to BookVerse.{" "}
+        You have not added any book on BookVerse.{" "}
         <Link to="/add-book?action=new">
           <b style={{ color: "#746ab0" }}>Start adding some</b>{" "}
         </Link>
@@ -46,6 +57,30 @@ export default function UserBooks({ currentUser }) {
               </p>
               <p>
                 <b>Added:</b> {new Date(book.date).toDateString()}
+              </p>
+            </div>
+          </div>
+        </Link>
+      ))}
+      <br />
+
+      <h3>Books you've purchased</h3>
+      <p>You have not purchased any book on BookVerse.</p>
+      {transactions.map((transaction) => (
+        <Link to={`/book/${transaction.slug}`} key={transaction.transaction_id}>
+          <div className={styles["book__details"]}>
+            <img src={transaction.bookimg} />
+            <div>
+              <h3>{transaction.title}</h3>
+              <p>
+                <b>Genre:</b> {transaction.category}
+              </p>
+              <p>
+                <b>Price:</b> ₦{transaction.price}
+              </p>
+              <p>
+                <b>Purchased:</b>{" "}
+                {moment(transaction.transaction_date).fromNow()}
               </p>
             </div>
           </div>
