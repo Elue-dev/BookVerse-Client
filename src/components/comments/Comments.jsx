@@ -71,7 +71,7 @@ export default function Comments({ bookId }) {
         </span>
         {!currentUser && (
           <Link to="/auth" className={styles.nouser}>
-            <p>Login to add a comment</p>
+            <p>Login to comment</p>
           </Link>
         )}
       </div>

@@ -83,18 +83,20 @@ export default function BookDetail() {
   );
 
   if (isLoading || loading)
-    return <div className={styles["book_detail"]}>LOADING...</div>;
+    return <div className="loading">LOADING BOOK...</div>;
   if (error || err)
     return <div className={styles["book_detail"]}>SOMETHING WENT WRONG...</div>;
 
   return (
     <section className={styles["book_detail"]}>
       <div className={styles["left__section"]}>
-        <img
-          src={book.bookimg}
-          alt={book.title}
-          className={styles["book__img"]}
-        />
+        <a href={book.bookimg}>
+          <img
+            src={book.bookimg}
+            alt={book.title}
+            className={styles["book__img"]}
+          />
+        </a>
         <div className={styles["added__by"]}>
           <img
             src={book.userimg}

@@ -26,7 +26,7 @@ export default function featured() {
     dispatch(CLOSE_MODAL());
   }, []);
 
-  if (isLoading) return <div className={styles.featured}>LOADING...</div>;
+  if (isLoading) return <div className="loading">LOADING...</div>;
   if (error)
     return <div className={styles.featured}>SOMETHING WENT WRONG...</div>;
 

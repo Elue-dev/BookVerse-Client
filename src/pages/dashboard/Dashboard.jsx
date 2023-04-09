@@ -32,6 +32,7 @@ export default function Dashboard() {
   const [credentials, setCredentials] = useState(initialState);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [logoutLoading, setLogoutLoading] = useState(false);
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const token = useSelector(getUserToken);
@@ -126,15 +127,15 @@ export default function Dashboard() {
   };
 
   const logoutUser = async () => {
-    setLoading(true);
+    setLogoutLoading(true);
 
     try {
       const response = await httpRequest.post(`${SERVER_URL}/auth/logout`);
-      setLoading(false);
+      setLogoutLoading(false);
       dispatch(REMOVE_ACTIVE_USER());
       response && navigate("/");
     } catch (error) {
-      setLoading(false);
+      setLogoutLoading(false);
       errorToast(error.response.data.message);
     }
   };
@@ -145,7 +146,13 @@ export default function Dashboard() {
         <div className={styles.card}>
           <p className={styles.logout} onClick={logoutUser}>
             <CiLogout />
-            <span>Log out</span>
+            <span>
+              {logoutLoading ? (
+                <PulseLoader loading={loading} size={10} color={"#fff"} />
+              ) : (
+                "Log out"
+              )}
+            </span>
           </p>
           <div>
             <img

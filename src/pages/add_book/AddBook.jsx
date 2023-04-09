@@ -121,8 +121,6 @@ export default function AddBook() {
     );
     const imageData = await response.json();
     imageUrl = imageData?.url?.toString();
-    setImage(null);
-    setImagePreview(null);
   };
 
   const addBook = async () => {
@@ -144,6 +142,8 @@ export default function AddBook() {
       image: imageUrl,
     });
     setLoading(false);
+    setImage(null);
+    setImagePreview(null);
     navigate("/");
   };
 
@@ -165,6 +165,8 @@ export default function AddBook() {
       image: imageUrl || state.bookimg,
     });
     setLoading(false);
+    setImage(null);
+    setImagePreview(null);
     navigate("/");
   };
 

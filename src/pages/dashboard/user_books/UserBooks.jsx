@@ -19,18 +19,18 @@ export default function UserBooks({ currentUser }) {
     })
   );
 
-  if (isLoading) return "LOADING YOUR BOOKS...";
+  if (isLoading) return <div className="loading">LOADING YOUR BOOKS...</div>;
   if (error) return "SOMETHING WENT WRONG......";
 
   return (
     <section className={styles["user__books"]}>
       <h3>Books you've added</h3>
       <p>
-        You have added{" "}
-        <b style={{ color: "#746ab0" }}>
-          {books.length === 0 ? "No Books" : books.length}
-        </b>{" "}
-        {books.length === 1 ? "Book" : "Books"} to BookVerse
+        You have added <b>{books.length === 0 ? "No Books" : books.length}</b>{" "}
+        {books.length === 1 ? "Book" : "Books"} to BookVerse.{" "}
+        <Link to="/add-book?action=new">
+          <b style={{ color: "#746ab0" }}>Start adding some</b>{" "}
+        </Link>
       </p>
       {books.map((book) => (
         <Link to={`/book/${book.slug}`} key={book.id}>

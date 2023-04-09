@@ -42,7 +42,7 @@ export default function Books() {
     );
   }, [dispatch, books, sort]);
 
-  if (isLoading) return <div className={styles.books}>LOADING...</div>;
+  if (isLoading) return <div className="loading">LOADING BOOKS...</div>;
 
   if (isLoading)
     return <div className={styles.books}>SOMETHING WENT WRONG."</div>;

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { MoonLoader } from "react-spinners";
+import { PulseLoader } from "react-spinners";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { FiLock, FiUser } from "react-icons/fi";
 import { IoMdLogIn } from "react-icons/io";
@@ -77,7 +77,6 @@ export default function Auth() {
         `${SERVER_URL}/auth/login`,
         credentials
       );
-      console.log(response);
       setLoading(false);
       dispatch(SET_ACTIVE_USER(response.data.user));
       dispatch(SET_USER_TOKEN(response.data.accessToken));
@@ -85,7 +84,6 @@ export default function Auth() {
     } catch (error) {
       setLoading(false);
       errorToast(error.response.data.message);
-      console.log(error);
     }
   };
 
@@ -113,6 +111,8 @@ export default function Auth() {
       );
       if (response) {
         setLoading(false);
+        setAvatar(null);
+        setAvatarPreview(null);
         successToast(`${response.data}! Please Login.`);
         setAuthState("login");
         setValues(initialState);
@@ -136,8 +136,6 @@ export default function Auth() {
     );
     const imageData = await response.json();
     imageUrl = imageData.url.toString();
-    setAvatar(null);
-    setAvatarPreview(null);
   };
 
   useEffect(() => {
@@ -284,7 +282,7 @@ export default function Auth() {
 
             {loading ? (
               <button type="button" disabled>
-                <MoonLoader loading={loading} size={10} color={"#fff"} />
+                <PulseLoader loading={loading} size={10} color={"#fff"} />
               </button>
             ) : (
               <button type="submit">Proceed</button>
