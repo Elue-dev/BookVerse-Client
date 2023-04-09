@@ -132,6 +132,7 @@ export default function BookDetail() {
           name: currentUser.username,
           onSuccess() {
             saveTransaction(paystack.id);
+            setIsPurchased(true);
           },
           onCancel() {
             errorToast("Transaction Cancelled ⛔️");
@@ -162,7 +163,7 @@ export default function BookDetail() {
     } else {
       setIsPurchased(false);
     }
-  }, [transactions]);
+  }, [transactions, myTransactions]);
 
   if (isLoading || loading)
     return <div className="loading">LOADING BOOK...</div>;
@@ -180,7 +181,7 @@ export default function BookDetail() {
           />
         </a>
 
-        {isPurchased && (
+        {myTransactions && isPurchased && (
           <p className={styles.pdate}>
             You purchased this book on{" "}
             {new Date(myTransactions?.transaction_date).toDateString()}
