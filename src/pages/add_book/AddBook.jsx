@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { TfiImage } from "react-icons/tfi";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import styles from "./add.book.module.scss";
@@ -8,12 +8,30 @@ import { CLOUD_NAME, UPLOAD_PRESET } from "../../../utils/variables";
 import { errorToast, successToast } from "../../../utils/alerts";
 import { useLocation, useNavigate } from "react-router-dom";
 import { PulseLoader } from "react-spinners";
-import moment from "moment";
 import { httpRequest } from "../../../services/httpRequest";
-import { useSelector } from "react-redux";
-import { getUserToken } from "../../redux/slices/auth.slice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getCurrentUser,
+  getUserToken,
+  SAVE_URL,
+} from "../../redux/slices/auth.slice";
 
 export default function AddBook() {
+  const currentUser = useSelector(getCurrentUser);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    setTitle(() => {
+      if (!currentUser) {
+        dispatch(SAVE_URL(pathname));
+        navigate("/auth");
+        return;
+      }
+    }, 500);
+  }, []);
+
   const state = useLocation().state;
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
@@ -23,7 +41,6 @@ export default function AddBook() {
   const [loading, setLoading] = useState(false);
   const imageRef = useRef();
   const [imagePreview, setImagePreview] = useState(null);
-  const navigate = useNavigate();
   const token = useSelector(getUserToken);
   const authHeaders = { headers: { authorization: `Bearer ${token}` } };
 
@@ -124,11 +141,19 @@ export default function AddBook() {
   };
 
   const addBook = async () => {
-    if (!title || !description || !genre || !image || !price) {
-      return errorToast(
-        "All fields are required (Title, Price, Description, Image & Genre )"
-      );
+    const fields = { title, description, genre, price, image };
+    let missingFields = [];
+
+    for (let field in fields) {
+      if (!fields[field]) missingFields.push(field);
     }
+
+    if (missingFields.length > 0)
+      return errorToast(
+        `${missingFields.join(", ")} ${
+          missingFields.length > 1 ? "are" : "is"
+        } required`
+      );
 
     setLoading(true);
 
@@ -148,11 +173,20 @@ export default function AddBook() {
   };
 
   const updateBook = async () => {
-    if (!title || !description || !genre || !price) {
-      return errorToast(
-        "All fields are required (Title, Price, Description & Genre )"
-      );
+    const fields = { title, description, genre, price };
+
+    let missingFields = [];
+
+    for (let field in fields) {
+      if (!fields[field]) missingFields.push(field);
     }
+
+    if (missingFields.length > 0)
+      return errorToast(
+        `${missingFields.join(", ")} ${
+          missingFields.length > 1 ? "are" : "is"
+        } required`
+      );
 
     setLoading(true);
 

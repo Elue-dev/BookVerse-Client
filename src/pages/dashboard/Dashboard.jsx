@@ -39,6 +39,7 @@ export default function Dashboard() {
   const imageRef = useRef();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  let imageUrl;
   const authHeaders = { headers: { authorization: `Bearer ${token}` } };
 
   const { username, oldPassword, newPassword, confirmPassword } = credentials;
@@ -54,7 +55,6 @@ export default function Dashboard() {
     setImagePreview(URL.createObjectURL(file));
   };
 
-  let imageUrl;
   const uploadUserImage = async () => {
     const img = new FormData();
     img.append("file", image);
@@ -114,7 +114,7 @@ export default function Dashboard() {
             `${response.data.message}. You changed your password, Please log in again`
           );
           dispatch(REMOVE_ACTIVE_USER());
-          navigate("/");
+          navigate("/auth");
         } else {
           successToast(response.data.message);
         }
@@ -130,10 +130,10 @@ export default function Dashboard() {
     setLogoutLoading(true);
 
     try {
-      const response = await httpRequest.post(`${SERVER_URL}/auth/logout`);
+      const res = await httpRequest.post(`${SERVER_URL}/auth/logout`);
       setLogoutLoading(false);
+      res.status === 200 && navigate("/books");
       dispatch(REMOVE_ACTIVE_USER());
-      response && navigate("/");
     } catch (error) {
       setLogoutLoading(false);
       errorToast(error.response.data.message);

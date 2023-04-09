@@ -37,19 +37,21 @@ export default function Navlinks() {
         <li>
           <Link to="/add-book?action=new">Add Book</Link>
         </li>
-        <li className={styles["search__icon"]}>
-          {search ? (
-            <MdOutlineSearchOff
-              onClick={handleCloseSearch}
-              style={{ fontSize: "1.5rem" }}
-            />
-          ) : (
-            <FaSearchPlus
-              onClick={handleShowSearch}
-              style={{ fontSize: "1.34rem" }}
-            />
-          )}
-        </li>
+        {location.pathname === "/" && (
+          <li className={styles["search__icon"]}>
+            {search ? (
+              <MdOutlineSearchOff
+                onClick={handleCloseSearch}
+                style={{ fontSize: "1.5rem" }}
+              />
+            ) : (
+              <FaSearchPlus
+                onClick={handleShowSearch}
+                style={{ fontSize: "1.34rem" }}
+              />
+            )}
+          </li>
+        )}
       </ul>
     </div>
   );

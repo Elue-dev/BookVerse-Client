@@ -1,22 +1,29 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { httpRequest } from "../../../services/httpRequest";
 import Comments from "../../components/comments/Comments";
 import { MdDeleteForever, MdOutlineEditNote } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-import { getCurrentUser, getUserToken } from "../../redux/slices/auth.slice";
+import {
+  getCurrentUser,
+  getUserToken,
+  SAVE_URL,
+} from "../../redux/slices/auth.slice";
 import { errorToast, successToast } from "../../../utils/alerts";
 import Notiflix from "notiflix";
 import styles from "./book.detail.module.scss";
 import PaystackPop from "@paystack/inline-js";
 import { useEffect, useState } from "react";
+import { SyncLoader } from "react-spinners";
 
 export default function BookDetail() {
   const [isPurchased, setIsPurchased] = useState(false);
   const { slug } = useParams();
   const currentUser = useSelector(getCurrentUser);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { pathname } = useLocation();
   const token = useSelector(getUserToken);
 
   const authHeaders = { headers: { authorization: `Bearer ${token}` } };
@@ -55,7 +62,7 @@ export default function BookDetail() {
 
   const mutation = useMutation(
     () => {
-      return httpRequest.delete(`/books/${book.id}`);
+      return httpRequest.delete(`/books/${book.id}`, authHeaders);
     },
     {
       onSuccess: (data) => {
@@ -64,7 +71,7 @@ export default function BookDetail() {
         queryClient.invalidateQueries(["books"]);
       },
       onError: (err) => {
-        errorToast(err.response.data.message);
+        errorToast("Somethinng went wrong");
         console.log("ERROR", err);
       },
     }
@@ -118,6 +125,7 @@ export default function BookDetail() {
   const buyBook = () => {
     if (!currentUser) {
       errorToast("Please login to purchase book");
+      dispatch(SAVE_URL(pathname));
       navigate("/auth");
       return;
     }
@@ -165,9 +173,13 @@ export default function BookDetail() {
     }
   }, [transactions, myTransactions]);
 
-  if (isLoading || loading)
-    return <div className="loading">LOADING BOOK...</div>;
-  if (error || err)
+  if (isLoading)
+    return (
+      <div className="loading">
+        <SyncLoader color={"#746ab0"} />
+      </div>
+    );
+  if (error)
     return <div className={styles["book_detail"]}>SOMETHING WENT WRONG...</div>;
 
   return (
@@ -239,7 +251,9 @@ export default function BookDetail() {
         <h2>Similar Books</h2>
 
         {similarBooks?.length === 0 ? (
-          <p>No similar books to {book.title}</p>
+          <p>
+            No similar books to <b>{book.title}</b>
+          </p>
         ) : (
           similarBooks?.map((sb) => (
             <Link key={sb.id} to={`/book/${sb.slug}`}>

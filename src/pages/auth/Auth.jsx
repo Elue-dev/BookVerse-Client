@@ -15,8 +15,13 @@ import {
 } from "../../../utils/variables";
 import { errorToast, successToast } from "../../../utils/alerts";
 import { BiBookReader } from "react-icons/bi";
-import { useDispatch } from "react-redux";
-import { SET_ACTIVE_USER, SET_USER_TOKEN } from "../../redux/slices/auth.slice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  SAVE_URL,
+  selectPreviousURL,
+  SET_ACTIVE_USER,
+  SET_USER_TOKEN,
+} from "../../redux/slices/auth.slice";
 import { httpRequest } from "../../../services/httpRequest";
 
 const initialState = {
@@ -39,6 +44,7 @@ export default function Auth() {
   const nameRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const previousURL = useSelector(selectPreviousURL);
   let imageUrl;
 
   useEffect(() => {
@@ -80,7 +86,13 @@ export default function Auth() {
       setLoading(false);
       dispatch(SET_ACTIVE_USER(response.data.user));
       dispatch(SET_USER_TOKEN(response.data.accessToken));
-      response && navigate("/");
+
+      if (response && !previousURL) {
+        navigate("/");
+      } else {
+        navigate(-1);
+        dispatch(SAVE_URL(null));
+      }
     } catch (error) {
       setLoading(false);
       errorToast(error.response.data.message);

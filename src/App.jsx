@@ -16,48 +16,43 @@ import Books from "./components/books/Books";
 
 function App() {
   return (
-    <>
+    <div className="app">
       <Toaster />
       <BrowserRouter>
         <Header />
         <Navlinks />
         <ScrollToTop />
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route
-            path="/auth"
-            element={
-              <Unauthenticated>
-                <Auth />
-              </Unauthenticated>
-            }
-          />
-          <Route exact path="/book/:slug" element={<BookDetail />} />
-          <Route exact path="/books" element={<Books />} />
+        <div className="main">
+          <Routes>
+            <Route exact path="/" element={<Home />} />
+            <Route
+              path="/auth"
+              element={
+                <Unauthenticated>
+                  <Auth />
+                </Unauthenticated>
+              }
+            />
+            <Route exact path="/book/:slug" element={<BookDetail />} />
+            <Route exact path="/books" element={<Books />} />
 
-          <Route
-            exact
-            path="/add-book"
-            element={
-              <Authenticated>
-                <AddBook />{" "}
-              </Authenticated>
-            }
-          />
+            <Route exact path="/add-book" element={<AddBook />} />
 
-          <Route
-            exact
-            path="/dashboard"
-            element={
-              <Authenticated>
-                <Dashboard />
-              </Authenticated>
-            }
-          />
-        </Routes>
+            <Route
+              exact
+              path="/dashboard"
+              element={
+                <Authenticated>
+                  <Dashboard />
+                </Authenticated>
+              }
+            />
+          </Routes>
+        </div>
+
         <Footer />
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 

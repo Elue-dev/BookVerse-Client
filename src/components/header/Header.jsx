@@ -16,19 +16,11 @@ export default function Header() {
   const [results, setResults] = useState([]);
   const currentUser = useSelector(getCurrentUser);
 
-  const {
-    isLoading,
-    error,
-    data: books,
-  } = useQuery(["books"], () =>
+  const { data: books } = useQuery(["books"], () =>
     httpRequest.get("/books").then((res) => {
       return res.data.books;
     })
   );
-
-  if (isLoading) return <div className="loading">LOADING...</div>;
-  if (error)
-    return <div className={styles.header}>SOMETHING WENT WRONG...</div>;
 
   const getBooks = async () => {
     const filteredBooks = books.filter((book) =>

@@ -11,6 +11,7 @@ import {
   selectFilteredBooks,
   SORT_BOOKS,
 } from "../../redux/slices/filter.slice";
+import { SyncLoader } from "react-spinners";
 
 const sortOptions = [
   { value: "latest", label: "Sorting: Latest" },
@@ -42,10 +43,7 @@ export default function Books() {
     );
   }, [dispatch, books, sort]);
 
-  if (isLoading) return <div className="loading">LOADING BOOKS...</div>;
-
-  if (isLoading)
-    return <div className={styles.books}>SOMETHING WENT WRONG."</div>;
+  if (error) return <div className={styles.books}>SOMETHING WENT WRONG."</div>;
 
   const handleSelectChange = (option) => {
     setSort(option.value);
@@ -62,28 +60,36 @@ export default function Books() {
           className={styles["select__purpose"]}
         />
       </label>
-      <section className={styles["all__books"]}>
-        {filteredBooks?.map((book) => (
-          <div className={styles["books__card"]} key={book.id}>
-            <div>
-              <img src={book.bookimg} alt="" />
-            </div>
-            <div className={styles["book__details"]}>
-              <h3>{book.title}</h3>
-              <p>
-                <BsFillCalendar2PlusFill /> {moment(book.date).fromNow()}
-              </p>
-              <p>{book.description.substring(0, 90)}...</p>
-              <div className={styles.bottom}>
-                <Link to={`/book/${book.slug}`}>
-                  <button>See Details</button>
-                </Link>
-                <p>₦{new Intl.NumberFormat().format(book.price)}</p>
+      {isLoading ? (
+        <div className="loading">
+          <SyncLoader color={"#746ab0"} />
+        </div>
+      ) : (
+        <>
+          <section className={styles["all__books"]}>
+            {filteredBooks?.map((book) => (
+              <div className={styles["books__card"]} key={book.id}>
+                <div>
+                  <img src={book.bookimg} alt="" />
+                </div>
+                <div className={styles["book__details"]}>
+                  <h3>{book.title}</h3>
+                  <p>
+                    <BsFillCalendar2PlusFill /> {moment(book.date).fromNow()}
+                  </p>
+                  <p>{book.description.substring(0, 90)}...</p>
+                  <div className={styles.bottom}>
+                    <Link to={`/book/${book.slug}`}>
+                      <button>See Details</button>
+                    </Link>
+                    <p>₦{new Intl.NumberFormat().format(book.price)}</p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        ))}
-      </section>
+            ))}
+          </section>
+        </>
+      )}
     </div>
   );
 }

@@ -26,7 +26,6 @@ export default function featured() {
     dispatch(CLOSE_MODAL());
   }, []);
 
-  if (isLoading) return <div className="loading">LOADING...</div>;
   if (error)
     return <div className={styles.featured}>SOMETHING WENT WRONG...</div>;
 
@@ -46,26 +45,32 @@ export default function featured() {
       </div>
       <h2>FEATURED BOOKS</h2>
       <section className={styles["featured__books"]}>
-        {books?.slice(0, 3).map((book) => (
-          <div className={styles["books__card"]} key={book.id}>
-            <div>
-              <img src={book.bookimg} alt="" />
-            </div>
-            <div className={styles["book__details"]}>
-              <h3>{book.title}</h3>
-              <p>
-                <BsFillCalendar2PlusFill /> {moment(book.date).fromNow()}
-              </p>
-              <p>{book.description.substring(0, 90)}...</p>
-              <div className={styles.bottom}>
-                <Link to={`/book/${book.slug}`}>
-                  <button>See Details</button>
-                </Link>
-                <p>₦{book.price}</p>
+        {isLoading ? (
+          <div className="loading">LOADING...</div>
+        ) : (
+          <>
+            {books?.slice(0, 3).map((book) => (
+              <div className={styles["books__card"]} key={book.id}>
+                <div>
+                  <img src={book.bookimg} alt="" />
+                </div>
+                <div className={styles["book__details"]}>
+                  <h3>{book.title}</h3>
+                  <p>
+                    <BsFillCalendar2PlusFill /> {moment(book.date).fromNow()}
+                  </p>
+                  <p>{book.description.substring(0, 90)}...</p>
+                  <div className={styles.bottom}>
+                    <Link to={`/book/${book.slug}`}>
+                      <button>See Details</button>
+                    </Link>
+                    <p>₦{book.price}</p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        ))}
+            ))}
+          </>
+        )}
       </section>
     </section>
   );
