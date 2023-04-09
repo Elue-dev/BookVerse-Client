@@ -87,7 +87,7 @@ export default function Auth() {
       dispatch(SET_ACTIVE_USER(response.data.user));
       dispatch(SET_USER_TOKEN(response.data.accessToken));
 
-      if (response && previousURL.includes("book")) {
+      if (response && previousURL?.includes("book")) {
         navigate(-1);
         dispatch(SAVE_URL(null));
       } else {
@@ -95,7 +95,7 @@ export default function Auth() {
       }
     } catch (error) {
       setLoading(false);
-      errorToast(error.response.data.message);
+      errorToast(error?.response?.data.message);
     }
   };
 
@@ -132,7 +132,6 @@ export default function Auth() {
     } catch (error) {
       setLoading(false);
       errorToast(error.response.data.message);
-      console.log(error);
     }
   };
 

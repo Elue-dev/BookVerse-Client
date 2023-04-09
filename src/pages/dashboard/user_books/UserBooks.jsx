@@ -20,25 +20,27 @@ export default function UserBooks({ currentUser }) {
     })
   );
 
-  const {
-    isLoading: loading,
-    error: err,
-    data: transactions,
-  } = useQuery([`transactions-${currentUser.id}`], () =>
-    httpRequest.get("/transactions", authHeaders).then((res) => {
-      return res.data;
-    })
+  const { data: transactions } = useQuery(
+    [`transactions-${currentUser.id}`],
+    () =>
+      httpRequest.get("/transactions", authHeaders).then((res) => {
+        return res.data;
+      })
   );
 
-  if (isLoading || loading)
-    return <div className="loading">LOADING YOUR BOOKS...</div>;
-  if (error || err) return "SOMETHING WENT WRONG......";
+  if (isLoading)
+    return (
+      <div className="loading" style={{ color: "#746ab0" }}>
+        LOADING YOUR BOOKS...
+      </div>
+    );
+  if (error) return "SOMETHING WENT WRONG......";
 
   return (
     <section className={styles["user__books"]}>
       <h2>Books you've added</h2>
 
-      {books.length === 0 ? (
+      {books?.length === 0 ? (
         <p>
           You have not added any book on BookVerse.{" "}
           <Link to="/add-book?action=new">
