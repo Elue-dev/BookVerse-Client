@@ -132,7 +132,7 @@ export default function BookDetail() {
             );
           },
           onCancel() {
-            errorToast("Transaction Cancelled 🙁");
+            errorToast("Transaction Cancelled ⛔️");
             console.log("");
           },
         });
@@ -220,6 +220,7 @@ export default function BookDetail() {
           <p>
             <b>Price:</b> ₦{book.price}
           </p>
+          <br />
           <p>{book.description}</p>
 
           <button className={styles["purchase__btn"]} onClick={buyBook}>
