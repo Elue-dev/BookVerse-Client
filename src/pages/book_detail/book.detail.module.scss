@@ -116,12 +116,9 @@
       font-weight: 700;
       text-transform: uppercase;
       font-size: 1.3rem;
+      margin-bottom: 0.6rem;
     }
-    & > p {
-      padding-bottom: 1rem;
-      font-size: 1.1rem;
-      color: lighten($mainColor, 20%);
-    }
+
     h3 {
       color: $mainColor;
     }

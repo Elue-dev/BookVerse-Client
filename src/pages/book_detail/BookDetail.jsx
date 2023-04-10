@@ -249,14 +249,9 @@ export default function BookDetail() {
       </div>
       <div className={styles["right__section"]}>
         <h2>Similar Books</h2>
-        <p>
-          <b>{similarBooks?.length}</b> similar{" "}
-          {similarBooks?.length === 1 ? "book" : "books"} found
-        </p>
-
         {similarBooks?.length === 0 ? (
           <p>
-            No similar books to <b>{book.title}</b>
+            No similar book to <b style={{ color: "#746ab0" }}>{book.title}</b>
           </p>
         ) : (
           similarBooks?.map((sb) => (
