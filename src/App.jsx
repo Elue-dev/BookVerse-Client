@@ -4,7 +4,6 @@ import ScrollToTop from "../utils/scrollToTop";
 import BookDetail from "./pages/book_detail/BookDetail";
 import Footer from "./components/footer/Footer";
 import Header from "./components/header/Header";
-import Hero from "./components/hero/Hero";
 import Navlinks from "./components/nav_links/Navlinks";
 import Authenticated from "./components/protect_routes/authenticated";
 import Unauthenticated from "./components/protect_routes/unauthenticated";

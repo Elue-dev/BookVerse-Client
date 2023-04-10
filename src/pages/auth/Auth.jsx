@@ -108,7 +108,7 @@ export default function Auth() {
     setLoading(true);
 
     try {
-      await uploadAvatar();
+      avatar && (await uploadAvatar());
 
       const credentials = {
         username: values.username,
