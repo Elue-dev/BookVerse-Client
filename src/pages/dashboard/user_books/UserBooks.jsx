@@ -51,7 +51,7 @@ export default function UserBooks({ currentUser }) {
         <p>
           You have added{" "}
           <b style={{ color: "#746ab0" }}>
-            {books.length} {books.length == 1 ? "book" : "books"}
+            {books?.length} {books?.length == 1 ? "book" : "books"}
           </b>{" "}
           to BookVerse
         </p>
@@ -79,11 +79,12 @@ export default function UserBooks({ currentUser }) {
       <br />
 
       <h2>Books you've purchased</h2>
-      {transactions.length > 0 ? (
+      {transactions?.length > 0 ? (
         <p>
           You have purchased{" "}
           <b style={{ color: "#746ab0" }}>
-            {transactions.length} {transactions.length === 1 ? "book" : "books"}{" "}
+            {transactions?.length}{" "}
+            {transactions?.length === 1 ? "book" : "books"}{" "}
           </b>{" "}
           on BookVerse.
         </p>
@@ -91,7 +92,7 @@ export default function UserBooks({ currentUser }) {
         <p>You have not purchased any book on BookVerse.</p>
       )}
 
-      {transactions.map((transaction) => (
+      {transactions?.map((transaction) => (
         <Link to={`/book/${transaction.slug}`} key={transaction.transaction_id}>
           <div className={styles["book__details"]}>
             <img src={transaction.bookimg} />
