@@ -39,7 +39,6 @@ export default function UserBooks({ currentUser }) {
   return (
     <section className={styles["user__books"]}>
       <h2>Books you've added</h2>
-
       {books?.length === 0 ? (
         <p>
           You have not added any book on BookVerse.{" "}
@@ -56,7 +55,6 @@ export default function UserBooks({ currentUser }) {
           to BookVerse
         </p>
       )}
-
       {books.map((book) => (
         <Link to={`/book/${book.slug}`} key={book.id}>
           <div className={styles["book__details"]}>
@@ -77,11 +75,9 @@ export default function UserBooks({ currentUser }) {
         </Link>
       ))}
       <br />
-
       <h2>Books you've purchased</h2>
-      {tLoading ? (
-        <p className="loading">Loading Books...</p>
-      ) : (
+      {tLoading && <p className="loading">Loading Books...</p>}
+      {!tLoading && (
         <>
           {transactions?.length > 0 ? (
             <p>
