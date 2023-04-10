@@ -48,7 +48,7 @@ export default function BookDetail() {
     })
   );
 
-  const { data: transactions } = useQuery(
+  const { data: transactions, isLoading: tLoading } = useQuery(
     [`transactions-${currentUser?.id}`],
     () =>
       httpRequest

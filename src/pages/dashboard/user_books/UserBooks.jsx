@@ -20,7 +20,7 @@ export default function UserBooks({ currentUser }) {
     })
   );
 
-  const { data: transactions } = useQuery(
+  const { data: transactions, isLoading: tLoading } = useQuery(
     [`transactions-${currentUser.id}`],
     () =>
       httpRequest.get("/transactions", authHeaders).then((res) => {
@@ -79,40 +79,49 @@ export default function UserBooks({ currentUser }) {
       <br />
 
       <h2>Books you've purchased</h2>
-      {transactions?.length > 0 ? (
-        <p>
-          You have purchased{" "}
-          <b style={{ color: "#746ab0" }}>
-            {transactions?.length}{" "}
-            {transactions?.length === 1 ? "book" : "books"}{" "}
-          </b>{" "}
-          on BookVerse.
-        </p>
+      {tLoading ? (
+        <p className="loading">Loading Books...</p>
       ) : (
-        <p>You have not purchased any book on BookVerse.</p>
-      )}
+        <>
+          {transactions?.length > 0 ? (
+            <p>
+              You have purchased{" "}
+              <b style={{ color: "#746ab0" }}>
+                {transactions?.length}{" "}
+                {transactions?.length === 1 ? "book" : "books"}{" "}
+              </b>{" "}
+              on BookVerse.
+            </p>
+          ) : (
+            <p>You have not purchased any book on BookVerse.</p>
+          )}
 
-      {transactions?.map((transaction) => (
-        <Link to={`/book/${transaction.slug}`} key={transaction.transaction_id}>
-          <div className={styles["book__details"]}>
-            <img src={transaction.bookimg} />
-            <div>
-              <h3>{transaction.title}</h3>
-              <p>
-                <b>Genre:</b> {transaction.category}
-              </p>
-              <p>
-                <b>Price:</b> ₦
-                {new Intl.NumberFormat().format(transaction.price)}
-              </p>
-              <p>
-                <b>Purchased:</b>{" "}
-                {moment(transaction.transaction_date).fromNow()}
-              </p>
-            </div>
-          </div>
-        </Link>
-      ))}
+          {transactions?.map((transaction) => (
+            <Link
+              to={`/book/${transaction.slug}`}
+              key={transaction.transaction_id}
+            >
+              <div className={styles["book__details"]}>
+                <img src={transaction.bookimg} />
+                <div>
+                  <h3>{transaction.title}</h3>
+                  <p>
+                    <b>Genre:</b> {transaction.category}
+                  </p>
+                  <p>
+                    <b>Price:</b> ₦
+                    {new Intl.NumberFormat().format(transaction.price)}
+                  </p>
+                  <p>
+                    <b>Purchased:</b>{" "}
+                    {moment(transaction.transaction_date).fromNow()}
+                  </p>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </>
+      )}
     </section>
   );
 }
