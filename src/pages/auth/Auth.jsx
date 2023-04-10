@@ -285,6 +285,7 @@ export default function Auth() {
                       ref={avatarRef}
                       name="avatar"
                       id="avatar"
+                      data-testid="avatar-input"
                     />
                   </>
                 )}
