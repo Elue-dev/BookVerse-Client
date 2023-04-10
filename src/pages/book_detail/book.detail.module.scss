@@ -31,10 +31,10 @@
       }
     }
     .pdate {
-      text-align: center;
       font-style: italic;
       color: rgb(162, 162, 162);
       font-size: 0.9rem;
+      margin: 2rem 0;
       @include mQ(800px) {
         font-size: 0.8rem;
       }
@@ -102,7 +102,7 @@
         border-radius: 0.5rem;
         padding: 0.4rem 1.4rem;
         cursor: pointer;
-        margin-bottom: 1rem;
+        margin: 2rem 0;
       }
     }
     .comments__container {

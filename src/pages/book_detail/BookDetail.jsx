@@ -195,12 +195,6 @@ export default function BookDetail() {
           />
         </a>
 
-        {myTransactions && isPurchased && (
-          <p className={styles.pdate}>
-            You purchased this book on{" "}
-            {new Date(myTransactions?.transaction_date).toDateString()}
-          </p>
-        )}
         <div className={styles["added__by"]}>
           <img
             src={book.user_img}
@@ -239,9 +233,16 @@ export default function BookDetail() {
           <br />
           <p>{book.description}</p>
 
-          <button className={styles["purchase__btn"]} onClick={buyBook}>
-            Buy Book
-          </button>
+          {myTransactions && isPurchased ? (
+            <p className={styles.pdate}>
+              You purchased this book on{" "}
+              {new Date(myTransactions?.transaction_date).toDateString()}
+            </p>
+          ) : (
+            <button className={styles["purchase__btn"]} onClick={buyBook}>
+              Buy Book
+            </button>
+          )}
         </div>
 
         <div className={styles["comments__container"]}>
