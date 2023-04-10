@@ -185,6 +185,8 @@ export default function BookDetail() {
   return (
     <section className={styles["book_detail"]}>
       <div className={styles["left__section"]}>
+        <h2>{book.title}</h2>
+        <br />
         <a href={book.bookimg}>
           <img
             src={book.bookimg}
@@ -228,7 +230,6 @@ export default function BookDetail() {
         </div>
 
         <div className={styles["book__details"]}>
-          <h2>{book.title}</h2>
           <p>
             <b>Genre:</b> {book.category}
           </p>
