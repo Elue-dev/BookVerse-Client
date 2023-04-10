@@ -90,8 +90,8 @@ export default function BookDetail() {
       {
         width: "320px",
         borderRadius: "5px",
-        titleColor: "crimson",
-        okButtonBackground: "crimson",
+        titleColor: "#746ab0",
+        okButtonBackground: "#746ab0",
         cssAnimationStyle: "zoom",
       }
     );
