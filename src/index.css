@@ -42,9 +42,29 @@ footer {
   animation: opacity 0.4s infinite alternate;
 }
 
+.suspense {
+  font-size: 1.9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.suspense > div {
+  font-size: 5rem;
+  color: #746ab0;
+}
+
 @media (max-width: 600px) {
   .loading {
     width: 90%;
+  }
+  .suspense {
+    font-size: 1rem;
+    flex-direction: column;
+  }
+  .suspense > div {
+    font-size: 2.3rem;
   }
 }
 

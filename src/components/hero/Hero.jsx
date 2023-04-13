@@ -52,6 +52,8 @@ export default function Hero() {
             onInput={getBooks}
           />
 
+          {isLoading && <div className="loading">Loading...</div>}
+
           {search && (
             <div className={styles["search__results"]}>
               {searchResults.length === 0 && (
