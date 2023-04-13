@@ -105,6 +105,10 @@ export default function Auth() {
     if (!values.username || !values.password || !values.email)
       return errorToast("Username, Email and Password are ALL required.");
 
+    if (values.username.length < 5) {
+      return errorToast("Username should have a minimum of 5 characters.");
+    }
+
     setLoading(true);
 
     try {

@@ -6,7 +6,6 @@ import BookDetail from "./pages/book_detail/BookDetail";
 import Footer from "./components/footer/Footer";
 import Header from "./components/header/Header";
 import Navlinks from "./components/nav_links/Navlinks";
-import { SyncLoader } from "react-spinners";
 import { BiBookReader } from "react-icons/bi";
 const Authenticated = lazy(() =>
   import("./components/protect_routes/authenticated")
@@ -35,7 +34,7 @@ function App() {
                 <div>
                   <BiBookReader />{" "}
                 </div>
-                <span>WELCOME TO BOOKVERSE!</span>
+                <span>BOOKVERSE...</span>
               </div>
             }
           >
