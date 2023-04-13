@@ -36,8 +36,6 @@ export default function Hero() {
     dispatch(CLOSE_MODAL());
   };
 
-  if (isLoading) return;
-
   return (
     <section className={styles.hero}>
       {modal && (
