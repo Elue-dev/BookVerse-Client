@@ -103,7 +103,7 @@ export default function Auth() {
     e.preventDefault();
 
     if (!values.username || !values.password || !values.email)
-      return errorToast("All fields are required");
+      return errorToast("Username, Email and Password are ALL required.");
 
     setLoading(true);
 

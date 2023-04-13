@@ -23,8 +23,10 @@ export default function Hero() {
   );
 
   const getBooks = async () => {
-    const filteredBooks = books.filter((book) =>
-      book.title.toLowerCase().includes(search.toLowerCase())
+    const filteredBooks = books.filter(
+      (book) =>
+        book.title.toLowerCase().includes(search.toLowerCase()) ||
+        book.category.toLowerCase().includes(search.toLowerCase())
     );
 
     setSearchResults(filteredBooks);
@@ -46,7 +48,7 @@ export default function Hero() {
         >
           <input
             type="text"
-            placeholder="Seach books..."
+            placeholder="Seach books by title or genre..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onInput={getBooks}

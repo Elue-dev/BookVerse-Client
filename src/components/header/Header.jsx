@@ -23,8 +23,10 @@ export default function Header() {
   );
 
   const getBooks = async () => {
-    const filteredBooks = books.filter((book) =>
-      book.title.toLowerCase().includes(search.toLowerCase())
+    const filteredBooks = books.filter(
+      (book) =>
+        book.title.toLowerCase().includes(search.toLowerCase()) ||
+        book.category.toLowerCase().includes(search.toLowerCase())
     );
 
     setResults(filteredBooks);
@@ -47,7 +49,7 @@ export default function Header() {
       <div className={styles.search}>
         <input
           type="search"
-          placeholder="Search book by title..."
+          placeholder="Search book by title or genre..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           onInput={getBooks}
