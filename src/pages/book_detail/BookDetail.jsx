@@ -220,10 +220,10 @@ export default function BookDetail() {
               <Link to="/add-book?action=edit" state={book}>
                 <MdOutlineEditNote className={styles.edit} />
               </Link>
-              {/* <MdDeleteForever
+              <MdDeleteForever
                 onClick={confirmDelete}
                 className={styles.delete}
-              /> */}
+              />
             </div>
           )}
         </div>
