@@ -7,6 +7,7 @@ import Footer from "./components/footer/Footer";
 import Header from "./components/header/Header";
 import Navlinks from "./components/nav_links/Navlinks";
 import { BiBookReader } from "react-icons/bi";
+import ErrorPage from "./components/error_page/ErrorPage";
 const Authenticated = lazy(() =>
   import("./components/protect_routes/authenticated")
 );
@@ -48,13 +49,12 @@ function App() {
                   </Unauthenticated>
                 }
               />
-              <Route exact path="/book/:slug" element={<BookDetail />} />
-              <Route exact path="/books" element={<Books />} />
+              <Route path="/book/:slug" element={<BookDetail />} />
+              <Route path="/books" element={<Books />} />
 
-              <Route exact path="/add-book" element={<AddBook />} />
+              <Route path="/add-book" element={<AddBook />} />
 
               <Route
-                exact
                 path="/dashboard"
                 element={
                   <Authenticated>
@@ -62,6 +62,7 @@ function App() {
                   </Authenticated>
                 }
               />
+              <Route path="*" element={<ErrorPage />} />
             </Routes>
           </Suspense>
         </div>

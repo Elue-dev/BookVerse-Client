@@ -1,0 +1,37 @@
+@import "../../styles/mixins";
+@import "../../styles/colors";
+
+.error__page {
+  @include container();
+  padding-top: 1rem;
+  @include flexBox(center, center, column);
+  text-align: center;
+  padding-top: 20%;
+
+  h1 {
+    font-size: 4rem;
+    @include mQ(600px) {
+      padding-top: 3rem;
+    }
+  }
+  p {
+    font-size: 1.2rem;
+    @include mQ(600px) {
+      padding-top: 0.2rem;
+    }
+  }
+  button {
+    outline: 0;
+    border: 0;
+    margin-top: 1rem;
+    background: transparent;
+    border: 3px solid #746ab0;
+    color: $mainColor;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 0.5rem;
+    padding: 0.4rem 1.4rem;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+}
