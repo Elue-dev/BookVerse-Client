@@ -120,6 +120,7 @@ export default function AddBook() {
         toast.dismiss();
         successToast(data.data.message);
         queryClient.invalidateQueries(["books"]);
+        navigate("/");
       },
       onError: (err) => {
         toast.dismiss();
@@ -202,9 +203,6 @@ export default function AddBook() {
     if (title && !/^[A-Za-z0-9\s]+$/.test(title))
       return errorToast("Book title contains unwanted characters");
 
-    if (typeof price !== "number" || isNaN(price) || !Number.isFinite(price))
-      return errorToast("price must be a number");
-
     if (description && !/^[A-Za-z0-9\s]+$/.test(description))
       return errorToast("Book description contains unwanted characters");
 
@@ -221,7 +219,10 @@ export default function AddBook() {
         } required`
       );
 
-    if (isNaN(price)) return errorToast("Price must be a number");
+    const convertedPrice = parseFloat(price);
+
+    if (isNaN(convertedPrice) || !Number.isFinite(convertedPrice))
+      return errorToast("price must be a number");
 
     setLoading(true);
     toast.loading("Updating book...");
