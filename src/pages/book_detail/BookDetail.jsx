@@ -74,8 +74,7 @@ export default function BookDetail() {
       },
       onError: (err) => {
         toast.dismiss();
-
-        errorToast("Somethinng went wrong");
+        errorToast(err?.response?.data.message);
         console.log("ERROR", err);
       },
     }
@@ -102,6 +101,7 @@ export default function BookDetail() {
   };
 
   const deleteBook = async () => {
+    toast.dismiss();
     toast.loading("Deleting book...");
     mutation.mutate();
   };

@@ -203,7 +203,10 @@ export default function AddBook() {
     if (title && !/^[A-Za-z0-9\s]+$/.test(title))
       return errorToast("Book title contains unwanted characters");
 
-    if (description && !/^[A-Za-z0-9\s]+$/.test(description))
+    if (
+      description &&
+      !/^[A-Za-z0-9\s.,;:'"!?()@#$%^&*+=<>\/\\\[\]\{\}-]*$/.test(description)
+    )
       return errorToast("Book description contains unwanted characters");
 
     let missingFields = [];
