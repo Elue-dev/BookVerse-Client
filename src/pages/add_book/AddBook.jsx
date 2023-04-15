@@ -15,6 +15,7 @@ import {
   getUserToken,
   SAVE_URL,
 } from "../../redux/slices/auth.slice";
+import toast from "react-hot-toast";
 
 export default function AddBook() {
   const currentUser = useSelector(getCurrentUser);
@@ -97,14 +98,15 @@ export default function AddBook() {
     },
     {
       onSuccess: (data) => {
-        console.log(data);
-        successToast(data.data.message);
+        toast.dismiss();
+        successToast(data?.data?.message);
         queryClient.invalidateQueries(["books"]);
       },
       onError: (err) => {
+        toast.dismiss();
         setLoading(false);
-        errorToast("Something went wrong");
-        console.log("ERROR", err);
+        errorToast(err?.response?.data.message);
+        // console.log("ERROR", err);
       },
     }
   );
@@ -115,12 +117,14 @@ export default function AddBook() {
     },
     {
       onSuccess: (data) => {
+        toast.dismiss();
         successToast(data.data.message);
         queryClient.invalidateQueries(["books"]);
       },
       onError: (err) => {
+        toast.dismiss();
         setLoading(false);
-        errorToast("Something went wrong");
+        errorToast(err?.response?.data.message);
         console.log("ERROR", err);
       },
     }
@@ -141,6 +145,17 @@ export default function AddBook() {
   };
 
   const addBook = async () => {
+    toast.dismiss();
+
+    if (title && !/^[A-Za-z0-9\s]+$/.test(title))
+      return errorToast("Book title contains unwanted characters");
+
+    if (
+      description &&
+      !/^[A-Za-z0-9\s.,;:'"!?()@#$%^&*+=<>\/\\\[\]\{\}-]*$/.test(description)
+    )
+      return errorToast("Book description contains unwanted characters");
+
     const fields = { title, description, genre, price, image };
     let missingFields = [];
 
@@ -155,9 +170,17 @@ export default function AddBook() {
         } required`
       );
 
+    const convertedPrice = parseFloat(price);
+
+    if (isNaN(convertedPrice) || !Number.isFinite(convertedPrice))
+      return errorToast("price must be a number");
+
     setLoading(true);
 
+    toast.loading("Adding book...");
+
     await uploadBookImage();
+
     await mutation.mutateAsync({
       title,
       description: parseText(description),
@@ -173,7 +196,17 @@ export default function AddBook() {
   };
 
   const updateBook = async () => {
+    toast.dismiss();
     const fields = { title, description, genre, price };
+
+    if (title && !/^[A-Za-z0-9\s]+$/.test(title))
+      return errorToast("Book title contains unwanted characters");
+
+    if (typeof price !== "number" || isNaN(price) || !Number.isFinite(price))
+      return errorToast("price must be a number");
+
+    if (description && !/^[A-Za-z0-9\s]+$/.test(description))
+      return errorToast("Book description contains unwanted characters");
 
     let missingFields = [];
 
@@ -188,7 +221,10 @@ export default function AddBook() {
         } required`
       );
 
+    if (isNaN(price)) return errorToast("Price must be a number");
+
     setLoading(true);
+    toast.loading("Updating book...");
 
     image && (await uploadBookImage());
     await updateMutation.mutateAsync({

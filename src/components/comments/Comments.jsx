@@ -15,6 +15,7 @@ import {
 import { errorToast, successToast } from "../../../utils/alerts";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
+import toast from "react-hot-toast";
 
 export default function Comments({ bookId }) {
   const currentUser = useSelector(getCurrentUser);
@@ -44,11 +45,13 @@ export default function Comments({ bookId }) {
     },
     {
       onSuccess: (data) => {
+        toast.dismiss();
         successToast(data.data.message);
         queryClient.invalidateQueries([`comment-${bookId}`]);
       },
       onError: (err) => {
-        errorToast("Something went wrong");
+        toast.dismiss();
+        errorToast(err.response.data.message);
         console.log("ERROR", err);
       },
     }
@@ -56,6 +59,7 @@ export default function Comments({ bookId }) {
 
   const addComment = () => {
     if (!text) return errorToast("Please add your comment");
+    toast.loading("Adding comment...");
     mutation.mutateAsync({
       comment: text,
       bookid: bookId,

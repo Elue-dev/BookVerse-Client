@@ -23,6 +23,7 @@ import {
   SET_USER_TOKEN,
 } from "../../redux/slices/auth.slice";
 import { httpRequest } from "../../../services/httpRequest";
+import toast from "react-hot-toast";
 
 const initialState = {
   username: "",
@@ -67,9 +68,14 @@ export default function Auth() {
 
   const loginUser = async (e) => {
     e.preventDefault();
+    toast.dismiss();
 
     if (!values.emailOrUsername || !values.password)
       return errorToast("Both fields are required");
+
+    if (!/^[A-Za-z0-9\s]+$/.test(values.emailOrUsername)) {
+      return errorToast("Your username contains unwanted characters");
+    }
 
     setLoading(true);
 
@@ -101,12 +107,17 @@ export default function Auth() {
 
   const registerUser = async (e) => {
     e.preventDefault();
+    toast.dismiss();
 
     if (!values.username || !values.password || !values.email)
       return errorToast("Username, Email and Password are ALL required.");
 
     if (values.username.length < 5) {
       return errorToast("Username should have a minimum of 5 characters.");
+    }
+
+    if (values.username && !/^[A-Za-z0-9\s]+$/.test(values.username)) {
+      return errorToast("Your username contains unwanted characters");
     }
 
     setLoading(true);

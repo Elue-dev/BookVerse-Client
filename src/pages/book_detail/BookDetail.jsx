@@ -16,6 +16,7 @@ import styles from "./book.detail.module.scss";
 import PaystackPop from "@paystack/inline-js";
 import { useEffect, useState } from "react";
 import { SyncLoader } from "react-spinners";
+import toast from "react-hot-toast";
 
 export default function BookDetail() {
   const [isPurchased, setIsPurchased] = useState(false);
@@ -66,11 +67,14 @@ export default function BookDetail() {
     },
     {
       onSuccess: (data) => {
+        toast.dismiss();
         successToast(data.data);
         navigate("/");
         queryClient.invalidateQueries(["books"]);
       },
       onError: (err) => {
+        toast.dismiss();
+
         errorToast("Somethinng went wrong");
         console.log("ERROR", err);
       },
@@ -98,6 +102,7 @@ export default function BookDetail() {
   };
 
   const deleteBook = async () => {
+    toast.loading("Deleting book...");
     mutation.mutate();
   };
 
@@ -144,11 +149,11 @@ export default function BookDetail() {
           },
           onCancel() {
             errorToast("Transaction Cancelled ⛔️");
-            console.log("");
+            // console.log("");
           },
         });
       } catch (err) {
-        console.log(err);
+        // console.log(err);
         errorToast("failed transaction" + err);
       }
     };

@@ -34,7 +34,7 @@ it("dosen't show the avatar upload input when in login state", async () => {
     </MemoryRouter>
   );
 
-  const loginBtn = screen.queryByText(/register/i);
+  const loginBtn = screen.queryByText(/Login/i);
   const avatarInput = screen.queryByTestId("avatar-input");
   await waitFor(() => {
     expect(loginBtn).toBeInTheDocument();
