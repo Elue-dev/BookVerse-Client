@@ -35,7 +35,7 @@ function App() {
                 <div>
                   <BiBookReader />{" "}
                 </div>
-                <span>BOOKVERSE...</span>
+                <h2>BOOKVERSE...</h2>
               </div>
             }
           >
