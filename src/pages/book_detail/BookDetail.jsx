@@ -74,7 +74,7 @@ export default function BookDetail() {
       },
       onError: (err) => {
         toast.dismiss();
-        errorToast(err?.response?.data.message);
+        errorToast("Something went wrong");
         console.log("ERROR", err);
       },
     }
@@ -220,10 +220,10 @@ export default function BookDetail() {
               <Link to="/add-book?action=edit" state={book}>
                 <MdOutlineEditNote className={styles.edit} />
               </Link>
-              <MdDeleteForever
+              {/* <MdDeleteForever
                 onClick={confirmDelete}
                 className={styles.delete}
-              />
+              /> */}
             </div>
           )}
         </div>
