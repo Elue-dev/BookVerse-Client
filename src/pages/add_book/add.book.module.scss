@@ -9,6 +9,7 @@
     display: block;
     overflow-x: hidden;
   }
+
   .left__section {
     flex: 3;
     @include mQ(900px) {
