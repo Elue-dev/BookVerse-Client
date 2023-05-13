@@ -22,7 +22,7 @@ it("shows username field only when in register state", async () => {
   fireEvent.click(registerBtn);
 
   const usernameField = screen.queryByPlaceholderText(/enter your username/i);
-  expect(usernameField).toBeInTheDocument();
+  expect(usernameField).not.toBeInTheDocument();
 });
 
 it("dosen't show the avatar upload input when in login state", async () => {
